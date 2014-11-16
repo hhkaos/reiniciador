@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block body %}
+<div class="row">
+  <div class="col-md-12">
+    <h1>Solicitud de alta de Iniciador</h1>
+    <p>Indicanos</p>
+  </div>
+</div>
+
+<form action="" method="post" class="row">
+    {% csrf_token %}
+    <div class="col-md-6">
+      <h2>Sobre ti</h2>
+      <p>
+        <label for="id_first_name">Nombre*:</label>
+        <input type="text" id="id_first_name" name="first_name" required></input>
+      </p>
+      <p>
+        <label for="id_last_name">Apellidos*:</label>
+        <input type="text" id="id_first_name" name="last_name" required></input>
+      </p>
+      <p>
+
+      <p>
+        <label for="id_photo">Foto*:</label> <input id="id_photo" name="photo" type="file" required>
+      </p>
+      <p>
+        <label for="id_bio">Bio:</label> <textarea cols="40" id="id_bio" name="bio" rows="10"></textarea>
+      </p>
+
+      <p>
+        <label for="id_profiles">Cuentas en redes sociales:</label>
+        <ul>
+            <li>
+              <label for="id_linkedin">Linkedin*:</label>
+              <input id="id_linkedin" maxlength="100" name="linkedin" type="text" required>
+            </li>
+            <li>
+              <label for="id_twitter">Twitter:</label>
+              <input id="id_twitter" maxlength="100" name="twitter" type="text">
+            </li>
+        </ul>
+
+      </p>
+    </div>
+    <div class="col-md-6">
+      <h2>Datos de contacto</h2>
+      <label for="id_primary_email">Email personal*:</label>
+      <input type="text" id="id_primary_email" name="primary_email" required></input>
+      <small>Indicar un correo que siempre vayas a comprobar (por ej: Gmail)</small>
+    </p>
+    <p>
+      <label for="id_secondary_emails">Otros emails:</label>
+      <input id="id_secondary_emails" name="secondary_emails" type="text"></input>
+      <small>Separador por comas</small>
+    </p>
+      <p>
+        <label for="id_phone">Teléfono*:</label> <input id="id_phone" maxlength="100" name="phone" type="text" required>
+      </p>
+      <h2>Información del grupo</h2>
+      <p>
+        <label for="id_groups">Grupo / iniciativa*:</label>
+        {{form.groups}}
+      </p>
+
+      <p>
+        <label for="id_role">Rol:</label> <input id="id_role" maxlength="100" name="role" type="text">
+      </p>
+
+    </div>
+    <div class="col-md-12">
+      <input type="submit" value="Alta">
+    </div>
+</form>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% load staticfiles %}
+
+<!doctype html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="description" content="">
+    {% block extra_head %}{% endblock extra_head %}
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'members/css/style.css' %}" />
+</head>
+
+<body>
+  <div class="container">
+    <p>
+      <a href="{% url 'home' %}">Inicio</a> |
+      <a href="{% url 'members:signup' %}">Solicitud de alta</a> |
+      <!--<a href="">Login</a>-->
+    </p>
+    {% block body %}{% endblock body %}
+  </div>
+</body>
+</html>
