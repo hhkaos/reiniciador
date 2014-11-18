@@ -15,24 +15,18 @@ from django.shortcuts import get_object_or_404
 #from django.shortcuts import get_or_create
 from django.views import generic
 
+from .forms import SignupForm
 from .models import Member
 from .models import Group
+from .models import Email
+from .models import Profile
 
 class SignupView(generic.FormView):
-    #model = Member
     form_class = SignupForm
-    '''fields = [
-        'user', 'photo', 'bio', 'phone', 'role', 'status',
-        'profiles', 'secondary_emails', 'groups'
-    ]'''
     template_name = 'members/signup.html'
-    #success_url = '/thanks/'
 
     def post(self, request, *args, **kwargs):
-        context = request.POST# self.get_context_data(**kwargs)
-        #import ipdb; ipdb.set_trace()
-
-
+        context = request.POST # self.get_context_data(**kwargs)
 
         u, created = User.objects.get_or_create(
             email = context.get('primary_email'),
@@ -41,8 +35,7 @@ class SignupView(generic.FormView):
             username = context.get('primary_email'),
         )
         if created:
-            import ipdb; ipdb.set_trace()
-            print 'yiah'
+            #
             m, created = Member.objects.get_or_create(
                 photo = context.get('photo'),
                 user = u,
@@ -57,6 +50,30 @@ class SignupView(generic.FormView):
                 for g in groups:
                     g, created = Group.objects.get_or_create(name = g)
                     m.groups.add(g)
+
+
+                emails = context.get('secondary_emails');
+                for e in emails.split(','):
+                    e, created = Email.objects.get_or_create(email = e.strip())
+                    m.secondary_emails.add(e)
+
+
+                linkedin = context.get('linkedin')
+                l, created = Profile.objects.get_or_create(url = linkedin, network = 'linkedin')
+                m.profiles.add(l)
+
+                twitter = context.get('twitter')
+                t, created = Profile.objects.get_or_create(url = twitter, network = 'twitter')
+                m.profiles.add(t)
+
+                num_websites = context.get('num_websites');
+                for i in range(1, int(num_websites) + 1):
+                    #import ipdb; ipdb.set_trace()
+                    name = context.get('website_name_'+str(i))
+                    url = context.get('website_url_'+str(i))
+                    p, created = Profile.objects.get_or_create(url = url.strip(), name = name)
+                    m.profiles.add(p)
+
                 m.save()
 
 
@@ -77,7 +94,7 @@ class SignupView(generic.FormView):
         # Send it:
         msg.send()'''
 
-        return HttpResponseRedirect('signup/thanks')
+        return HttpResponseRedirect('/signup/thanks')
 
 class ThanksView(generic.TemplateView):
         template_name = 'members/thanks.html'

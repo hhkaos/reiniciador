@@ -10,17 +10,27 @@
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'members/css/style.css' %}" />
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <script src="{% static 'members/js/scripts.js' %}" /></script>
+
 </head>
 
 <body>
+  <div class="header navbar navbar-default">
+    <section class="container ">
+      <img id="logo" src="{% static 'members/img/logo.png' %}">
+      <ul class="nav navbar-nav navbar-right">
+        <li></li>
+        <li><a href="{% url 'home' %}">Inicio</a></li>
+        <li><a href="{% url 'members:signup' %}"><span class="btn btn-primary">Solicitud de alta</span></a></li>
+        <!--<a href="">Login</a>-->
+      </nav>
+    </section>
+
+  </div>
   <div class="container">
-    <p>
-      <a href="{% url 'home' %}">Inicio</a> |
-      <a href="{% url 'members:signup' %}">Solicitud de alta</a> |
-      <!--<a href="">Login</a>-->
-    </p>
     {% block body %}{% endblock body %}
   </div>
 </body>

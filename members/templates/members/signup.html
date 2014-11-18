@@ -5,73 +5,97 @@
 <div class="row">
   <div class="col-md-12">
     <h1>Solicitud de alta de Iniciador</h1>
-    <p>Indicanos</p>
+    <p>En este formulario te pedimos algunos datos de contacto, otros datos sobre tí (información que compartimos entre todos los miembros) e información del grupo/iniciativa al que te quieres incorporar</p>
   </div>
 </div>
 
-<form action="" method="post" class="row">
+<form action="" method="post" class="row mb2" id="signup-form">
     {% csrf_token %}
     <div class="col-md-6">
-      <h2>Sobre ti</h2>
-      <p>
-        <label for="id_first_name">Nombre*:</label>
-        <input type="text" id="id_first_name" name="first_name" required></input>
-      </p>
-      <p>
-        <label for="id_last_name">Apellidos*:</label>
-        <input type="text" id="id_first_name" name="last_name" required></input>
-      </p>
-      <p>
+      <div class="box">
+        <h2>Sobre ti</h2>
+        <p class="short">
+          <label for="id_first_name">Nombre*:</label>
+          <input type="text" class="form-control" id="id_first_name" name="first_name" required></input>
+        </p>
+        <p class="short">
+          <label for="id_last_name" >Apellidos*:</label>
+          <input type="text" class="form-control" id="id_first_name" name="last_name" required></input>
+        </p>
+        <p>
 
-      <p>
-        <label for="id_photo">Foto*:</label> <input id="id_photo" name="photo" type="file" required>
-      </p>
-      <p>
-        <label for="id_bio">Bio:</label> <textarea cols="40" id="id_bio" name="bio" rows="10"></textarea>
-      </p>
+        <p class="short">
+          <label for="id_photo" >Foto*:</label>
+          <input id="id_photo" name="photo" type="file" required>
+        </p>
+        <p class="short">
+          <label for="id_bio" >Bio:</label>
+          <textarea cols="40" id="id_bio" name="bio" rows="10" class="form-control"></textarea>
+        </p>
 
-      <p>
-        <label for="id_profiles">Cuentas en redes sociales:</label>
-        <ul>
-            <li>
-              <label for="id_linkedin">Linkedin*:</label>
-              <input id="id_linkedin" maxlength="100" name="linkedin" type="text" required>
-            </li>
-            <li>
-              <label for="id_twitter">Twitter:</label>
-              <input id="id_twitter" maxlength="100" name="twitter" type="text">
-            </li>
-        </ul>
+        <p>
+          <label for="id_profiles">Perfiles y sitios:</label>
+          <ul id="profiles">
+              <li class="short">
+                <label for="id_linkedin">Linkedin*:</label>
+                <input id="id_linkedin" maxlength="100" name="linkedin" type="text" class="form-control" required>
+              </li>
+              <li class="short">
+                <label for="id_twitter">Twitter*:</label>
+                <input id="id_twitter" maxlength="100" name="twitter" type="text" class="form-control" required>
+              </li>
+              <li>
+                <hr>
+                <p><span class="short">Otros sitios:</span> <span class="btn btn-sm btn-info" id="add-website">+Añadir</span></p>
+                <input type="hidden" id="num_websites" name="num_websites" value="1">
+                <ul id="other_profiles">
+                  <li class="short">
+                    <label for="id_website_name_1">Nombre</label>
+                    <input id="id_website_name_1" maxlength="100" name="website_name_1" type="text" class="form-control">
+                    <label for="id_website_url_1">URL</label>
+                    <input id="id_website_url_1" maxlength="100" name="website_url_1" type="text" class="form-control">
+                  </li>
+                </ul>
+              </li>
+          </ul>
 
-      </p>
+        </p>
+      </div>
     </div>
     <div class="col-md-6">
-      <h2>Datos de contacto</h2>
-      <label for="id_primary_email">Email personal*:</label>
-      <input type="text" id="id_primary_email" name="primary_email" required></input>
-      <small>Indicar un correo que siempre vayas a comprobar (por ej: Gmail)</small>
-    </p>
-    <p>
-      <label for="id_secondary_emails">Otros emails:</label>
-      <input id="id_secondary_emails" name="secondary_emails" type="text"></input>
-      <small>Separador por comas</small>
-    </p>
-      <p>
-        <label for="id_phone">Teléfono*:</label> <input id="id_phone" maxlength="100" name="phone" type="text" required>
-      </p>
-      <h2>Información del grupo</h2>
-      <p>
-        <label for="id_groups">Grupo / iniciativa*:</label>
-        {{form.groups}}
-      </p>
+      <div class="box mb1">
+        <h2>Datos de contacto</h2>
+        <p class="short">
+          <label for="id_primary_email">Email personal*:</label>
+          <input type="text" id="id_primary_email" name="primary_email" class="form-control" required></input>
+          <small>Indica un correo que siempre vayas a comprobar (por ej: Gmail)</small>
+        </p>
+        <p class="short">
+          <label for="id_phone">Teléfono*:</label>
+          <input id="id_phone" maxlength="100" name="phone" class="form-control" type="text" required>
+        </p>
+        <p class="short">
+          <label for="id_secondary_emails">Otros emails:</label>
+          <input id="id_secondary_emails" name="secondary_emails" class="form-control" type="text"></input>
+          <small>(Opcional) Separados por comas</small>
+        </p>
+      </div>
+      <div class="box">
+        <h2>Información del grupo</h2>
+        <p>
+          <label for="id_groups">Grupo o iniciativa a la que te quieres unir:</label>
+          {{form.groups}}
+        </p>
 
-      <p>
-        <label for="id_role">Rol:</label> <input id="id_role" maxlength="100" name="role" type="text">
-      </p>
+        <p>
+          <label for="id_role">Rol que desempeñas:</label>
+          <input id="id_role" maxlength="100" class="form-control" name="role" type="text">
+        </p>
+      </div>
 
     </div>
     <div class="col-md-12">
-      <input type="submit" value="Alta">
+      <input type="submit" value="Enviar la solicitud" class="pull-right btn btn-lg btn-warning">
     </div>
 </form>
 {% endblock %}

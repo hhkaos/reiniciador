@@ -36,8 +36,6 @@ class Profile(models.Model):
     NETWORK = Choices(
         ('linkedin', 'Linkedin'),
         ('twitter', 'Twitter'),
-        ('facebook', 'Facebook'),
-        ('personal_site', 'Personal site'),
         ('other', 'Other'),
     )
 

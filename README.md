@@ -5,7 +5,7 @@ the long term.
 
 ### How do I get set up? ###
 
-Run this to be able to execute this project in local follow those steps:
+Follow those steps in order to be able to execute this project in local:
 
 1) (Optional) Create a local isolated environment
 
@@ -34,7 +34,7 @@ python manage.py runserver
 
 ### Pending tasks ###
 
-* Finish signup form
 * Prepare for deploy
+* Validate signup form (frontend)
 * Add current members
-* Add cron task (check if member is still active), after 60 days of his last activity
+* Add cron task (check if member is still active), after 60 days of his last activity, if not -> send email thought mandril to check
