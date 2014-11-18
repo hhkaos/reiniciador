@@ -3,12 +3,30 @@
 
 {% block body %}
 <h1>Comunidad Iniciador</h1>
-
-<p>La comunidad de Iniciador está formada por...</p>
-<p>Valores, listado de miemberos, listado de ciudades...</p>
-
-<h2>Por qué montar iniciador en tu ciudad</h2>
-<p>Vídeos</p>
+<div class="pull-right text-center" id="community">
+  <img src="{% static 'members/img/global-meeting.png' %}" class="img-thumbnail mb1">
+  <p>
+    <a target="_blank" href="https://www.youtube.com/watch?v=9iv1qJ0mxpg">
+      26/09/2014 - Global Meeting #GMInicador
+    </a>
+  </p>
+</div>
+<p>Iniciador es una fundación tiene como objetivo fomentar y facilitar el emprendimiento en el mundo.</p>
+<p>La comunidad la forman XXX emprendedores que voluntariamente organizan eventos para emprendedores periódicamente en XXX ciudades.
+<p>Aquí tienes un listado de los equipos en las diferentes ciudades donde se organiza actualmente Iniciador:
+<p>Si en tu ciudad no hay Iniciador o quieres unirte a alguna ciudad puede <a href="{% url 'members:signup' %}">solicitar el alta aquí</a>.</p>
+<h2>Razones para ser organizador en Iniciador</h2>
+<p>Las personas que mejor pueden explicarte los motivos ser organizador son los propios miembros de la comunidad, así que aquí te dejamos unos vídeos que han hecho ellos mismos.</p>
+<ul id="why-iniciador">
+  <li>
+    <iframe width="200" height="113" src="//www.youtube.com/embed/KBje7ko4UHo" frameborder="0" allowfullscreen></iframe>
+    <p>Ángel María - Iniciador Madrid</p>
+  </li>
+  <li>
+    <iframe width="200" height="113" src="//www.youtube.com/embed/8HAY7ynRFB0" frameborder="0" allowfullscreen></iframe>
+    <p>Raúl Jiménez - Iniciador Madrid</p>
+  </li>
+</ul>
 <h2>Qué conlleva montar iniciador</h2>
 Tareas, responsabilidades, etc.
 {% endblock %}

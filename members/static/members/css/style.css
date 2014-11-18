@@ -6,11 +6,28 @@
   height: 50px;
   display: inline-block;
 }
+#community img{
+  max-width: 400px;
+}
+#why-iniciador{
 
+  padding:0;
+}
+#why-iniciador li{
+  list-style: none;
+  margin: 0 1em 0 0;
+  display: inline-block;
+}
+#why-iniciador li p{
+  text-align: center;
+}
 
 h1{
   font-size: 1.5em;
   margin: 0 0 1em 0;
+}
+h2{
+  font-size: 1.3em;
 }
 #signup-form h2{
   margin: 0 0 1em 0;
