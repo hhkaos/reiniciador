@@ -24,6 +24,16 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
+
+'''Heroku conf'''
+# Parse database configuration from $DATABASE_URL
+import dj_database_url
+DATABASES['default'] =  dj_database_url.config()
+
+# Honor the 'X-Forwarded-Proto' header for request.is_secure()
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+'''END Heroku conf'''
+
 ALLOWED_HOSTS = ('*',)
 
 
@@ -60,13 +70,14 @@ WSGI_APPLICATION = 'iniciador.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
-
+'''
+Remove by heroku
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
-}
+}'''
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
@@ -78,9 +89,20 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
+'''
 STATIC_URL = '/static/'
-MEDIA_URL = os.path.join(BASE_DIR, 'media/')
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+'''
+# New heroku
+STATIC_ROOT = 'staticfiles'
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+
+# End heroku
+MEDIA_URL = os.path.join(BASE_DIR, 'media/')
 ADMIN_MEDIA_PREFIX = '/media/'
 
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
