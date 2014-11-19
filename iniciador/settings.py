@@ -64,7 +64,7 @@ INSTALLED_APPS = (
     'djrill',
 )
 
-MANDRILL_API_KEY = "iEAisPRH9PlbrE1Hd9zXoQ"
+MANDRILL_API_KEY = "vUb8YeytJCcpZqbeaPnYKQ"
 EMAIL_BACKEND = "djrill.mail.backends.djrill.DjrillBackend"
 
 MIDDLEWARE_CLASSES = (

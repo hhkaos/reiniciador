@@ -78,6 +78,17 @@ class SignupView(generic.FormView):
 
 
         print "POST"
+        msg = EmailMultiAlternatives(
+            subject="Solicitud de alta",
+            body="Hemos recibido tu solicitud de alta",
+            from_email="hhkaos@gmail.com",
+            to=[context.get('primary_email')]
+        )
+        msg.tags = ["iniciador", "alta"]
+        msg.metadata = {'user_id': u.id}
+        msg.send()
+        response = msg.mandrill_response[0]
+        mandrill_id = response['_id']
         '''msg = EmailMultiAlternatives(
             subject="Djrill Message",
             body="This is the text email body",
