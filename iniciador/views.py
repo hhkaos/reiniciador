@@ -15,6 +15,15 @@ from django.shortcuts import get_object_or_404
 #from django.shortcuts import get_or_create
 from django.views import generic
 
+from members.models import Group
+from members.models import Member
 
 class HomeView(generic.TemplateView):
     template_name = 'members/home.html'
+
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        context['num_members'] = len(Member.objects.all())
+        context['num_groups'] = len(Group.objects.all())
+        context['groups'] = Group.objects.all()
+        return self.render_to_response(context)

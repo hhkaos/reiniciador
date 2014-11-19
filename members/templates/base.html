@@ -20,7 +20,7 @@
 <body>
   <div class="header navbar navbar-default">
     <section class="container ">
-      <img id="logo" src="{% static 'members/img/logo.png' %}">
+      <a href="{% url 'home' %}"><img id="logo" src="{% static 'members/img/logo.png' %}"></a>
       <ul class="nav navbar-nav navbar-right">
         <li></li>
         <li><a href="{% url 'home' %}"><span class="btn btn-default">Inicio</span></a></li>

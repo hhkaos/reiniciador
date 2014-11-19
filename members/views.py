@@ -76,36 +76,50 @@ class SignupView(generic.FormView):
 
                 m.save()
 
+                msg = EmailMultiAlternatives(
+                    subject="Solicitud de alta",
+                    body="Hemos recibido tu solicitud de alta",
+                    from_email="gerencia@iniciador.com",
+                    to=[context.get('primary_email')]
+                )
+                msg.tags = ["iniciador", "alta"]
+                msg.metadata = {'user_id': u.id}
+                msg.template_name = "alta-iniciador"           # A Mandrill template name
+                msg.global_merge_vars = {                        # Content blocks to fill in
+                    'WEBSITE': "<a href='"+context.get('linkedin')+"/*|TRACKINGNO|*'>Linkedin</a>"
+                }
 
-        print "POST"
-        msg = EmailMultiAlternatives(
-            subject="Solicitud de alta",
-            body="Hemos recibido tu solicitud de alta",
-            from_email="hhkaos@gmail.com",
-            to=[context.get('primary_email')]
-        )
-        msg.tags = ["iniciador", "alta"]
-        msg.metadata = {'user_id': u.id}
-        msg.send()
-        response = msg.mandrill_response[0]
-        mandrill_id = response['_id']
-        '''msg = EmailMultiAlternatives(
-            subject="Djrill Message",
-            body="This is the text email body",
-            from_email="Djrill Sender <djrill@example.com>",
-            to=["Recipient One <hhkaos@gmail.com>"],
-            headers={'Reply-To': "Service <support@example.com>"} # optional extra headers
-        )
-        msg.attach_alternative("<p>This is the HTML email body</p>", "text/html")
-
-        # Optional Mandrill-specific extensions:
-        msg.tags = ["one tag", "two tag", "red tag", "blue tag"]
-        msg.metadata = {'user_id': "8675309"}
-
-        # Send it:
-        msg.send()'''
+                msg.send()
+                response = msg.mandrill_response[0]
+                mandrill_id = response['_id']
 
         return HttpResponseRedirect('/signup/thanks')
 
 class ThanksView(generic.TemplateView):
-        template_name = 'members/thanks.html'
+    template_name = 'members/thanks.html'
+
+class MemberListView(generic.TemplateView):
+    template_name = 'members/member_list.html'
+
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        context['members'] = Member.objects.all()
+
+        return self.render_to_response(context)
+
+class PingMembersView(generic.TemplateView):
+    template_name = 'members/thanks.html'
+
+    def get(self, request, *args, **kwargs):
+        members = Member.objects.all()
+        notified = []
+
+        for m in members:
+            d = now.date() - m.last_activity
+            if d.days == 60:
+                #Send mail to update
+                #Change status to unknown
+                notified.append(m)
+                pass
+
+        context['notified'] = notified

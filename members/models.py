@@ -20,14 +20,14 @@ class Member(TimeStampedModel):
     photo = models.FileField(upload_to='photos/', null=True, blank=True)
     user = models.OneToOneField(User)
     bio = models.TextField(blank=True)
-    phone = models.CharField(blank=True, max_length=100)
+    phone = models.CharField(blank=False, max_length=100)
     role = models.CharField(blank=True, max_length=100)
-    status = models.CharField(blank=True, choices=STATUS, max_length=100)
-    last_activity = models.DateField(null=True, default=date.today)
+    status = models.CharField(blank=False, choices=STATUS, max_length=100)
+    last_activity = models.DateField(null=False, default=date.today)
 
     profiles = models.ManyToManyField('Profile', blank=True)
     secondary_emails = models.ManyToManyField('Email', blank=True)
-    groups = models.ManyToManyField('Group', blank=True)
+    groups = models.ManyToManyField('Group', null=False)
 
     def __str__(self):
         return u"{self.user.first_name} {self.user.last_name}".format(self=self)
@@ -48,7 +48,7 @@ class Profile(models.Model):
 
 @python_2_unicode_compatible
 class Group(models.Model):
-    name = models.CharField(blank=True, max_length=100, primary_key=True)
+    name = models.CharField(null=False, blank=False, max_length=100, primary_key=True)
     email = models.ForeignKey(
         'Email', related_name='email_set', null=True, blank=True)
 
@@ -56,7 +56,7 @@ class Group(models.Model):
         return self.name
 
 class Email(models.Model):
-    email = models.EmailField(primary_key=True)
+    email = models.EmailField(primary_key=True, null=False)
 
     def __str__(self):
         return self.email
