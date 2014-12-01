@@ -3,7 +3,7 @@
 
 {% block body %}
   {% for m in members %}
-    <img src='{% static m.photo %}'>
+    <img src='/media/{{m.photo}}'>
     {{m}},
   {% endfor %}
 {% endblock %}

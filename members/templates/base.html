@@ -22,9 +22,30 @@
     <section class="container ">
       <a href="{% url 'home' %}"><img id="logo" src="{% static 'members/img/logo.png' %}"></a>
       <ul class="nav navbar-nav navbar-right">
-        <li></li>
-        <li><a href="{% url 'home' %}"><span class="btn btn-default">Inicio</span></a></li>
-        <li><a href="{% url 'members:signup' %}"><span class="btn btn-primary">Solicitud de alta</span></a></li>
+        <!--<li></li>
+        <li><a href="{% url 'home' %}"><span class="btn btn-default">Inicio</span></a></li>-->
+        {% if not user.is_authenticated %}
+          <li><a href="{% url 'members:login' %}"><span class="btn btn-default">Login</span></a></li>
+          <li><a href="{% url 'members:signup' %}"><span class="btn btn-primary">Solicitud de alta</span></a></li>
+        {% else %}
+          <!--<li><a href="{% url 'members:profile' %}"><span class="btn btn-default">Perfil</span></a></li>
+          <li><a href="{% url 'members:logout' %}"><span class="btn btn-default">Logout</span></a></li>-->
+          <li>
+            <div class="dropdown" id="user-menu">
+
+              <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                <img id="avatar" src='/media/{{user.member.photo}}'>
+                <span class="caret"></span>
+              </button>
+
+              <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url 'home' %}">Inicio</a></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url 'members:profile' %}">Perfil</a></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url 'members:logout' %}">Logout</a></li>
+              </ul>
+            </div>
+          </li>
+        {% endif %}
         <!--<a href="">Login</a>-->
       </nav>
     </section>

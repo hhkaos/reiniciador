@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block body %}
+  <h1>Revisión de miembros</h1>
+  <h2>Notificados<h2>
+  <p>
+    Última actualización hace 60 y hace 10 días que se les pidió que
+    actualizas en, al no haberlo hecho se solicita revisión manual a gerencia.
+  </p>
+
+  <ul>
+  {% for c in checked %}
+    <li>{{c.user.username}}</li>
+  {% endfor %}
+  </ul>
+
+  <h2>Revisión<h2>
+  <p>
+    Última actualización hace 60 se les envía un mail para solicitar que
+    refresquen sus datos.
+  </p>
+  <ul>
+  {% for n in notified %}
+    <li>{{n.user.email}}</li>
+  {% endfor %}
+  </ul>
+{% endblock %}

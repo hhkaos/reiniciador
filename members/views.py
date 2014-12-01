@@ -1,8 +1,13 @@
+from datetime import date
+import hashlib
+
 from django.shortcuts import render
+from braces.views import LoginRequiredMixin
 
 from django.conf import settings
 from django.shortcuts import render
 from django.contrib.auth.models import User, Group
+
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
@@ -77,16 +82,16 @@ class SignupView(generic.FormView):
                 m.save()
 
                 msg = EmailMultiAlternatives(
-                    subject="Solicitud de alta",
-                    body="Hemos recibido tu solicitud de alta",
-                    from_email="gerencia@iniciador.com",
+                    subject = "Solicitud de alta",
+                    body = "Hemos recibido tu solicitud de alta",
+                    from_email = settings.FROM_EMAIL,
                     to=[context.get('primary_email')]
                 )
                 msg.tags = ["iniciador", "alta"]
                 msg.metadata = {'user_id': u.id}
                 msg.template_name = "alta-iniciador"           # A Mandrill template name
                 msg.global_merge_vars = {                        # Content blocks to fill in
-                    'WEBSITE': "<a href='"+context.get('linkedin')+"/*|TRACKINGNO|*'>Linkedin</a>"
+                    'WEBSITE': "<a href='" + context.get('linkedin') + "/*|TRACKINGNO|*'>Linkedin</a>"
                 }
 
                 msg.send()
@@ -108,18 +113,116 @@ class MemberListView(generic.TemplateView):
         return self.render_to_response(context)
 
 class PingMembersView(generic.TemplateView):
-    template_name = 'members/thanks.html'
+    template_name = 'members/ping.html'
 
     def get(self, request, *args, **kwargs):
-        members = Member.objects.all()
-        notified = []
+        context = self.get_context_data(**kwargs)
+
+        members = Member.objects.exclude(status='inactive').exlude(status='pending')
+        check = []
+        notify = []
+        today = date.today()
 
         for m in members:
-            d = now.date() - m.last_activity
+            d = today - m.last_activity
+            #import ipdb; ipdb.set_trace()
             if d.days == 60:
-                #Send mail to update
-                #Change status to unknown
-                notified.append(m)
-                pass
+                m.status = 'unknown'
+                m.save()
+                check.append(m)
 
-        context['notified'] = notified
+            elif d.days == 70:
+                notify.append(m)
+
+        for c in check:
+            msg = EmailMultiAlternatives(
+                to = [c.user.email],
+                from_email = settings.FROM_EMAIL
+            )
+            groups = []
+            for g in members[0].groups.all():
+                groups.append(g.name)
+            groups = ', '.join(g for g in groups)
+
+            msg.tags = ["iniciador", "check", today]
+            msg.template_name = "checkeo-iniciador"
+            msg.global_merge_vars = {
+                'NAME': c.user.first_name,
+                'GROUPS': groups,
+                'EMAIL': c.user.email,
+                'PHONE': c.phone,
+                'WEBSITE': settings.SERVER,
+                'LINK': 'http://' + settings.SERVER + '/members/revision/' + c.user.username,
+                'HASH': hashlib.sha224(str(c.last_activity) + str(c.user.id)).hexdigest()
+            }
+
+            msg.send()
+            response = msg.mandrill_response[0]
+            mandrill_id = response['_id']
+
+        #TODO: Terminar la notificacion a la organizacion
+        for n in notify:
+            msg = EmailMultiAlternatives(
+                to=[n.user.email],
+                from_email = settings.FROM_EMAIL
+            )
+            msg.tags = ["iniciador", "notify", today]
+            msg.template_name = "notificar-iniciador"           # A Mandrill template name
+            msg.global_merge_vars = {                        # Content blocks to fill in
+                'WEBSITE': "<a href='/*|TRACKINGNO|*'>Linkedin</a>",
+                #user data
+            }
+
+            #msg.send()
+            #response = msg.mandrill_response[0]
+            #mandrill_id = response['_id']
+
+        context['notified'] = notify
+        context['checked'] = check
+
+        return self.render_to_response(context)
+
+class ReviewView(generic.TemplateView):
+    template_name = 'members/review.html'
+
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+
+        u = Member.objects.get(user__username = context.get('username'))
+        valid_hash = hashlib.sha224(str(u.last_activity) + str(u.user.id)).hexdigest()
+
+        #b8b60ecfb50dbe3aa504c776934e2bd3a3b5e67670e6b1bbabe4d426 == 1/08/2014
+
+        # Check if usernanme - hash is valid
+        if context.get('hash') == valid_hash:
+            context['valid'] = True
+            status = context.get('status')
+            #import ipdb; ipdb.set_trace()
+            if status == 'valid':
+                u.status = 'active'
+                u.last_activity = date.today()
+                u.save()
+            elif status == 'invalid':
+                pass
+            elif status == 'unsuscribe':
+                u.status = 'inactive'
+                u.save()
+                #TODO: send an email to the organization
+            else:
+                pass
+        else:
+            context['valid'] = False
+
+        return self.render_to_response(context)
+
+
+
+#TODO: Add decorator
+class ProfileView(LoginRequiredMixin, generic.TemplateView):
+    template_name = 'members/profile.html'
+
+    login_url = "/members/login/"
+
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        return self.render_to_response(context)

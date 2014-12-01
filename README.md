@@ -34,12 +34,12 @@ python manage.py runserver
 
 ### Pending tasks ###
 
-* Prepare automatic emails (every day)
-  * If (last_activity = 60 days) -> send mail to update_last activity & check profile
-  * If (last_activity = 75 day) -> notify admins
 * Prepare a login page
 * Prepare page that list all members
 * Finish homepage
+* Prepare automatic emails (every day)
+  * If (last_activity = 60 days) -> send mail to update_last activity & check profile
+  * If (last_activity = 75 day) -> notify admins
 * Add current members
 * Add cron task (check if member is still active), after 60 days of his last activity, if not -> send email thought mandril to check
 * Validate signup form (frontend)

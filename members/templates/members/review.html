@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block body %}
+  <h1>Revisión de perfil</h1>
+
+  {% if valid %}
+    {% if status = 'valid' %}
+      ¡Tus datos han sido confirmados, gracias!
+    {% else %}
+      {% if status = 'invalid' %}
+        Por favor <a href="{% url 'members:login' %}">identifícate con tu cuenta</a> y actualízalos
+      {% else %}
+        {% if status = 'unsuscribe' %}
+          Gracias por avisarnos, ya no recibirás más correos como este.
+        {% else %}
+        Hay un problema con la actualización de tu estado, escribe a hhkaos@gmail.com
+        indicándole enviándole la URL de esta página indicándole que la acción no se ha reconocido
+        {% endif %}
+      {% endif %}
+    {% endif %}
+
+  {% else %}
+    Hay un problema con la actualización de tu estado, escribe a hhkaos@gmail.com
+    indicándole enviándole la URL de esta página indicándole que te ha dado un
+    problema el hash.
+  {% endif %}
+
+{% endblock %}

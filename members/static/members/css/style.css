@@ -7,6 +7,14 @@
   display: inline-block;
   margin-top: 8px;
 }
+#avatar{
+  max-width:25px;
+  max-height:25px;
+}
+#user-menu{
+    padding-top: 10px;
+
+}
 #community img{
   max-width: 400px;
 }

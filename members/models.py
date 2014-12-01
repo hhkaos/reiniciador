@@ -12,13 +12,13 @@ from django.contrib.auth.models import User
 class Member(TimeStampedModel):
     STATUS = Choices(
         ('active', 'Active'),
-        ('inactive', 'Inative'),
+        ('inactive', 'Inactive'),
         ('pending', 'Pending'),
         ('unknown', 'Unknown'),
     )
 
     photo = models.FileField(upload_to='photos/', null=True, blank=True)
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(User, related_name='member')
     bio = models.TextField(blank=True)
     phone = models.CharField(blank=False, max_length=100)
     role = models.CharField(blank=True, max_length=100)

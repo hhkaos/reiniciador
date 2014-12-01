@@ -23,13 +23,17 @@ SECRET_KEY = '+ax-x$vcc4)#w^c#+5=kdbv8buz@81g9w018g0(o!t+nlyj012'
 DEBUG = True
 
 TEMPLATE_DEBUG = True
-
+LOGIN_REDIRECT_URL = '/members/profile/'
+LOGOUT_URL = '/'
 
 '''Heroku conf'''
 # Parse database configuration from $DATABASE_URL
 import dj_database_url
 DATABASES = {}
 DATABASES['default'] =  dj_database_url.config()
+
+#EMAIL ADDRESS
+FROM_EMAIL = "gerencia@iniciador.com"
 
 if DATABASES['default'] == {}:
     DATABASES = {
@@ -42,6 +46,9 @@ if DATABASES['default'] == {}:
             'PORT': '5432',
         }
     }
+    SERVER = 'localhost:8000'
+else:
+    SERVER = 'iniciador.herokuapp.com'
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
