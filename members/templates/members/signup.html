@@ -1,6 +1,17 @@
 {% extends "base.html" %}
 {% load staticfiles %}
 
+{% block custom_js %}
+  <script src="{% static 'members/js/signup.js' %}" /></script>
+{% endblock %}
+
+{% block breadcumb %}
+<ol class="breadcrumb">
+  <li><a href="{% url 'home' %}">Inicio</a></li>
+  <li class="active">Solicitud de alta en Iniciador</a>
+</ol>
+{% endblock %}
+
 {% block body %}
 <div class="row">
   <div class="col-md-12">
@@ -9,18 +20,18 @@
   </div>
 </div>
 
-<form action="" method="post" class="row mb2" id="signup-form">
+<form action="" method="post" class="row mb2" id="signup-form" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="col-md-6">
       <div class="box">
         <h2>Sobre ti</h2>
         <p class="short">
           <label for="id_first_name">Nombre*:</label>
-          <input type="text" class="form-control" id="id_first_name" name="first_name" required></input>
+          <input type="text" class="form-control" id="id_first_name" name="first_name" placeholder="Raúl" required></input>
         </p>
         <p class="short">
           <label for="id_last_name" >Apellidos*:</label>
-          <input type="text" class="form-control" id="id_first_name" name="last_name" required></input>
+          <input type="text" class="form-control" id="id_last_name" name="last_name" placeholder="Jiménez Ortega" required></input>
         </p>
         <p>
 
@@ -29,8 +40,8 @@
           <input id="id_photo" name="photo" type="file" required>
         </p>
         <p class="short">
-          <label for="id_bio" class="pull-left">Bio:</label>
-          <textarea cols="40" id="id_bio" name="bio" rows="10" class="form-control"></textarea>
+          <label for="id_bio" class="pull-left">Motivación*:</label>
+          <textarea cols="40" id="id_bio" name="bio" rows="10" class="form-control" placeholder="¿Qué es lo que te ha motivado a unirte a Iniciador?" required></textarea>
         </p>
 
         <p>
@@ -38,11 +49,11 @@
           <ul id="profiles">
               <li class="short">
                 <label for="id_linkedin">Linkedin*:</label>
-                <input id="id_linkedin" maxlength="100" name="linkedin" type="text" class="form-control" required>
+                <input id="id_linkedin" maxlength="100" name="linkedin" type="text" class="form-control" placeholder="http://es.linkedin.com/in/jimenezortegaraul" required data-toggle="tooltip" data-placement="bottom" title="Revisa que la URL esté bien escrita">
               </li>
               <li class="short">
                 <label for="id_twitter">Twitter*:</label>
-                <input id="id_twitter" maxlength="100" name="twitter" type="text" class="form-control" required>
+                <input id="id_twitter" maxlength="100" name="twitter" type="text" class="form-control" placeholder="http://twitter.com/hhkaos" required  data-toggle="tooltip" data-placement="bottom" title="Revisa que la URL esté bien escrita">
               </li>
               <li>
                 <hr>
@@ -51,9 +62,9 @@
                 <ul id="other_profiles">
                   <li class="short">
                     <label for="id_website_name_1">Nombre</label>
-                    <input id="id_website_name_1" maxlength="100" name="website_name_1" type="text" class="form-control">
+                    <input id="id_website_name_1" maxlength="100" name="website_name_1" type="text" placeholder="Blog" class="form-control">
                     <label for="id_website_url_1">URL</label>
-                    <input id="id_website_url_1" maxlength="100" name="website_url_1" type="text" class="form-control">
+                    <input id="id_website_url_1" maxlength="100" name="website_url_1" type="text" placeholder="http://rauljimenez.info" class="form-control">
                   </li>
                 </ul>
               </li>
@@ -67,17 +78,17 @@
         <h2>Datos de contacto</h2>
         <p class="short">
           <label for="id_primary_email">Email personal*:</label>
-          <input type="text" id="id_primary_email" name="primary_email" class="form-control" required></input>
+          <input type="text" id="id_primary_email" name="primary_email" placeholder="hhkaos@gmail.com" class="form-control" required  data-toggle="tooltip" data-placement="bottom" title="Revisa que el correo esté bien escrito"></input>
           <small>Indica un correo que siempre vayas a comprobar (por ej: Gmail)</small>
         </p>
         <p class="short">
-          <label for="id_phone">Teléfono*:</label>
-          <input id="id_phone" maxlength="100" name="phone" class="form-control" type="text" required>
+          <label for="id_phone">Teléfono(s)*:</label>
+          <input id="id_phone" maxlength="100" name="phone" class="form-control" placeholder="+34 666 777 888, +34 666 999 888, ..." type="text" required>
         </p>
         <p class="short">
           <label for="id_secondary_emails">Otros emails:</label>
-          <input id="id_secondary_emails" name="secondary_emails" class="form-control" type="text"></input>
-          <small>(Opcional) Separados por comas</small>
+          <input id="id_secondary_emails" name="secondary_emails" class="form-control" placeholder="email@dominio.com, otroMail@dominio.com, ..." type="text" data-toggle="tooltip" data-placement="bottom" title="Revisa que el/los correo(s) esté(n) bien escrito(s)"></input>
+          <small>(Opcional, y separados por comas)</small>
         </p>
       </div>
       <div class="box">
@@ -89,13 +100,13 @@
 
         <p>
           <label for="id_role">Rol que desempeñas:</label>
-          <input id="id_role" maxlength="100" class="form-control" name="role" type="text">
+          <input id="id_role" maxlength="100" class="form-control" placeholder="Responsable de grupo" name="role" type="text">
         </p>
       </div>
 
     </div>
     <div class="col-md-12">
-      <input type="submit" value="Enviar la solicitud" class="pull-right btn btn-lg btn-warning">
+      <input type="submit" value="Enviar la solicitud" class="pull-right btn btn-lg btn-warning mt1">
     </div>
 </form>
 {% endblock %}

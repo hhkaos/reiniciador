@@ -69,6 +69,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'members',
     'djrill',
+    'rest_framework',
+    #'storages',
 )
 
 MANDRILL_API_KEY = "vUb8YeytJCcpZqbeaPnYKQ"
@@ -113,6 +115,17 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 '''
+
+#Amazon S3
+'''
+DEFAULT_FILE_STORAGE = 'libs.storages.S3Storage.S3Storage'
+AWS_ACCESS_KEY_ID =
+AWS_SECRET_ACCESS_KEY =
+AWS_STORAGE_BUCKET_NAME =
+STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+'''
+
+
 # New heroku
 STATIC_ROOT = 'staticfiles'
 STATIC_URL = '/static/'

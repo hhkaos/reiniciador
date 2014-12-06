@@ -1,6 +1,14 @@
 {% extends "base.html" %}
 {% load staticfiles %}
 
+{% block breadcumb %}
+<ol class="breadcrumb">
+  <li><a href="{% url 'home' %}">Inicio</a></li>
+  <li><a href="{% url 'members:signup' %}">Solicitud de alta en Iniciador</a></li>
+  <li class="active">Gracias</li>
+</ol>
+{% endblock %}
+
 {% block body %}
 <h1>Gracias</h1>
 <p>Pronto revisaremos la solicitud y nos pondremos en contacto contigo.</p>

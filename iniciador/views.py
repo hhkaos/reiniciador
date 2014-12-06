@@ -23,7 +23,7 @@ class HomeView(generic.TemplateView):
 
     def get(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
-        context['num_members'] = len(Member.objects.all())
+        context['num_members'] = len(Member.objects.exclude(status='inactive').exclude(status='pending'))
         context['num_groups'] = len(Group.objects.all())
         context['groups'] = Group.objects.all()
         return self.render_to_response(context)

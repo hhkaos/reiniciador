@@ -14,14 +14,16 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
     <script src="{% static 'members/js/scripts.js' %}" /></script>
+    {% block custom_js %}{% endblock %}
 
 </head>
 
 <body>
   <div class="header navbar navbar-default">
-    <section class="container ">
-      <a href="{% url 'home' %}"><img id="logo" src="{% static 'members/img/logo.png' %}"></a>
-      <ul class="nav navbar-nav navbar-right">
+    <section class="container">
+
+      <a href="{% url 'home' %}" class="pull-left"><img id="logo" src="{% static 'members/img/logo.png' %}"></a>
+      <ul class="nav navbar-nav navbar-right pull-right" id="main-menu">
         <!--<li></li>
         <li><a href="{% url 'home' %}"><span class="btn btn-default">Inicio</span></a></li>-->
         {% if not user.is_authenticated %}
@@ -47,11 +49,16 @@
           </li>
         {% endif %}
         <!--<a href="">Login</a>-->
-      </nav>
+      </ul>
     </section>
 
   </div>
   <div class="container">
+
+    {% block breadcumb %}
+    {% endblock %}
+
+
     {% block body %}{% endblock body %}
   </div>
 </body>

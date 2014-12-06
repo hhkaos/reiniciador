@@ -1,9 +1,35 @@
 {% extends "base.html" %}
 {% load staticfiles %}
 
+{% block breadcumb %}
+  <ol class="breadcrumb">
+    <li><a href="{% url 'home' %}">Inicio</a></li>
+    <li class="active">Lista de miembros</a>
+  </ol>
+{% endblock %}
+
 {% block body %}
-  {% for m in members %}
-    <img src='/media/{{m.photo}}'>
-    {{m}},
-  {% endfor %}
+  <h1>Miembros de la comunidad de Iniciador</h1>
+  <ul class="style-none">
+    {% for m in members %}
+      {% if m.status = "active" %}
+        <li class="member-box">
+          <div class="img" style="background-image:url(/media/{{m.photo}})"></div><br>
+          <a href="#">
+            {{m}}
+          </a>
+          <p class="networks">
+            {% for p in m.profiles.all %}
+              <a href="{{p.url}}" class="{{p.name}} {{p.network}}">
+                {{p.name}} {{p.network}}
+              </a>
+            {% endfor %}
+          </p>
+          {% for g in m.groups.all %}
+            {{g}}<br>
+          {% endfor %}
+        </li>
+      {% endif %}
+    {% endfor %}
+  </ul>
 {% endblock %}

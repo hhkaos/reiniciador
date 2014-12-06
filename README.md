@@ -34,7 +34,8 @@ python manage.py runserver
 
 ### Pending tasks ###
 
-* Prepare a login page
+* Change media files -> http://django-storages.readthedocs.org/en/latest/backends/apache_libcloud.html
+* Validate signup form & placeholders & info (frontend) - usuarios duplicados, correos ya registrados, etc.
 * Prepare page that list all members
 * Finish homepage
 * Prepare automatic emails (every day)
@@ -42,4 +43,6 @@ python manage.py runserver
   * If (last_activity = 75 day) -> notify admins
 * Add current members
 * Add cron task (check if member is still active), after 60 days of his last activity, if not -> send email thought mandril to check
-* Validate signup form (frontend)
+* Si el nombre de usuario ya existe crear buscar otro
+* Enviar mail para notificar la solicitud de nueva alta de miembro/grupo
+* Estado de grupos pendientes/miembros, solicitar nuevo grupo.

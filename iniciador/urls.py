@@ -9,7 +9,8 @@ urlpatterns = patterns('',
     url(r'^$', views.HomeView.as_view(), name='home'),
     # url(r'^blog/', include('blog.urls')),
     url(r'^members/', include('members.urls', namespace='members')),
-
+    url(r'^api/', include('members.api.urls', namespace='api-members')),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^admin/', include(admin.site.urls)),
 )
 

@@ -20,11 +20,14 @@ from django.shortcuts import get_object_or_404
 #from django.shortcuts import get_or_create
 from django.views import generic
 
+
+
 from .forms import SignupForm
 from .models import Member
 from .models import Group
 from .models import Email
 from .models import Profile
+
 
 class SignupView(generic.FormView):
     form_class = SignupForm
@@ -41,8 +44,9 @@ class SignupView(generic.FormView):
         )
         if created:
             #
+
             m, created = Member.objects.get_or_create(
-                photo = context.get('photo'),
+                #photo = safe_filename,
                 user = u,
                 bio = context.get('bio'),
                 phone = context.get('phone'),
@@ -51,6 +55,10 @@ class SignupView(generic.FormView):
             )
 
             if created:
+                #import ipdb; ipdb.set_trace()
+                m.photo = request.FILES['photo']
+                m.save()
+
                 groups = request.POST.getlist('groups')
                 for g in groups:
                     g, created = Group.objects.get_or_create(name = g)
@@ -76,16 +84,22 @@ class SignupView(generic.FormView):
                     #import ipdb; ipdb.set_trace()
                     name = context.get('website_name_'+str(i))
                     url = context.get('website_url_'+str(i))
-                    p, created = Profile.objects.get_or_create(url = url.strip(), name = name)
-                    m.profiles.add(p)
+                    if name and url:
+                        p, created = Profile.objects.get_or_create(url = url.strip(), name = name)
+                        m.profiles.add(p)
 
                 m.save()
+
+                if settings.DEBUG == True:
+                    mail_to = "hhkaos@gmail.com"
+                else:
+                    mail_to = context.get('primary_email')
 
                 msg = EmailMultiAlternatives(
                     subject = "Solicitud de alta",
                     body = "Hemos recibido tu solicitud de alta",
                     from_email = settings.FROM_EMAIL,
-                    to=[context.get('primary_email')]
+                    to=[mail_to]
                 )
                 msg.tags = ["iniciador", "alta"]
                 msg.metadata = {'user_id': u.id}
@@ -93,12 +107,17 @@ class SignupView(generic.FormView):
                 msg.global_merge_vars = {                        # Content blocks to fill in
                     'WEBSITE': "<a href='" + context.get('linkedin') + "/*|TRACKINGNO|*'>Linkedin</a>"
                 }
-
+                print "Mail sent to:" + mail_to
                 msg.send()
+
                 response = msg.mandrill_response[0]
                 mandrill_id = response['_id']
+            else:
+                print "El miembro ya existe"
+        else:
+            print "El username ya existe"
 
-        return HttpResponseRedirect('/signup/thanks')
+        return HttpResponseRedirect(reverse('members:thanks'))
 
 class ThanksView(generic.TemplateView):
     template_name = 'members/thanks.html'

@@ -1,3 +1,8 @@
+/*******************************
+
+            COMMON
+
+********************************/
 .header{
   border-bottom: 1px solid #ccc;
   margin-bottom: 2em
@@ -15,6 +20,35 @@
     padding-top: 10px;
 
 }
+#main-menu{
+  min-width: 230px;
+}
+h1{
+  font-size: 1.5em;
+  margin: 0 0 1em 0;
+}
+h2{
+  font-size: 1.3em;
+}
+
+.mt1{
+  margin-top: 1em;
+}
+.mt2{
+  margin-top: 2em;
+}
+.mb1{
+  margin-bottom: 1em;
+}
+.mb2{
+  margin-bottom: 2em;
+}
+
+/*******************************
+
+            HOME
+
+********************************/
 #community img{
   max-width: 400px;
 }
@@ -31,13 +65,11 @@
   text-align: center;
 }
 
-h1{
-  font-size: 1.5em;
-  margin: 0 0 1em 0;
-}
-h2{
-  font-size: 1.3em;
-}
+/*******************************
+
+          SIGN-UP
+
+********************************/
 #signup-form h2{
   margin: 0 0 1em 0;
   font-size: 1em;
@@ -78,8 +110,7 @@ span.short{
     display: inline-block;
 }
 #signup-form .form-control{
-display: inline-block;
-width: auto;
+  display: inline-block;
 }
 input[type=file]{
     display: inline-block;
@@ -120,21 +151,45 @@ ul#profiles,
 label[for="id_profiles"]{
   text-decoration: underline;
 }
-.mt1{
-  margin-top: 1em;
-}
-.mt2{
-  margin-top: 2em;
-}
-.mb1{
-  margin-bottom: 1em;
-}
-.mb2{
-  margin-bottom: 2em;
-}
 
 .box{
   border: 1px solid #dedede;
   padding: 1em;
   background-color: #fefefe;
+}
+
+/*******************************
+
+          MEMBER-LIST
+
+********************************/
+.style-none {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.member-box {
+  list-style: none;
+  border: 1px dotted #DDD;
+  background-color: #FEFEFE;
+  width: 210px;
+  padding: 10px;
+  text-align: center;
+  margin-bottom: 15px;
+  display: inline-block;
+  margin-right: 15px;
+}
+.member-box div.img {
+  width: 150px;
+  height: 150px;
+  margin: 0 auto;
+  border-radius: 50%;
+  background-size: 100%;
+  border: 2px solid #CCC;
+}
+
+.member-box .networks{
+  text-transform: capitalize;
+
 }
