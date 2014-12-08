@@ -32,6 +32,9 @@ class Member(TimeStampedModel):
     def __str__(self):
         return u"{self.user.first_name} {self.user.last_name}".format(self=self)
 
+    def owner(self):
+        return user.email
+
 class Profile(models.Model):
     NETWORK = Choices(
         ('linkedin', 'Linkedin'),

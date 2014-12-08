@@ -2,58 +2,68 @@
 {% load staticfiles %}
 
 {% block custom_js %}
-  <script src="{% static 'members/js/signup.js' %}" /></script>
+<!--<script src="{% static 'members/js/signup.js' %}" /></script>-->
 {% endblock %}
 
 {% block breadcumb %}
 <ol class="breadcrumb">
   <li><a href="{% url 'home' %}">Inicio</a></li>
   <li class="active">Solicitud de alta en Iniciador</a>
-</ol>
+  </ol>
 {% endblock %}
 
 {% block body %}
-<div class="row">
-  <div class="col-md-12">
-    <h1>Solicitud de alta de Iniciador</h1>
-    <p>En este formulario te pedimos algunos datos de contacto, otros datos sobre tí (información que compartimos entre todos los miembros) e información del grupo/iniciativa al que te quieres incorporar</p>
+  <div class="row">
+    <div class="col-md-12">
+      <h1>Solicitud de alta de Iniciador</h1>
+      <p>En este formulario te pedimos algunos datos de contacto, otros datos sobre tí (información que compartimos entre todos los miembros) e información del grupo/iniciativa al que te quieres incorporar</p>
+    </div>
   </div>
-</div>
 
-<form action="" method="post" class="row mb2" id="signup-form" enctype="multipart/form-data">
+  <form action="" method="post" class="row mb2" id="signup-form" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="col-md-6">
       <div class="box">
         <h2>Sobre ti</h2>
         <p class="short">
           <label for="id_first_name">Nombre*:</label>
-          <input type="text" class="form-control" id="id_first_name" name="first_name" placeholder="Raúl" required></input>
+          <input type="text" value="{{form.first_name.value|default:""}}" class="form-control" id="id_first_name" name="first_name" placeholder="Raúl" required></input>
+          {{form.first_name.errors}}
         </p>
         <p class="short">
           <label for="id_last_name" >Apellidos*:</label>
-          <input type="text" class="form-control" id="id_last_name" name="last_name" placeholder="Jiménez Ortega" required></input>
+          <input type="text" value="{{form.last_name.value|default:""}}" class="form-control" id="id_last_name" name="last_name" placeholder="Jiménez Ortega" required></input>
+          {{form.last_name.errors}}
         </p>
         <p>
 
-        <p class="short">
-          <label for="id_photo" >Foto*:</label>
-          <input id="id_photo" name="photo" type="file" required>
-        </p>
-        <p class="short">
-          <label for="id_bio" class="pull-left">Motivación*:</label>
-          <textarea cols="40" id="id_bio" name="bio" rows="10" class="form-control" placeholder="¿Qué es lo que te ha motivado a unirte a Iniciador?" required></textarea>
-        </p>
+          <p class="short">
+            <label for="id_photo" >Foto*:</label>
+            <span class="btn btn-sm btn-info btn-file">
+              Subir fichero
+              <input id="id_photo" name="photo" type="file" required>
+            </span>
+            {{form.photo.errors}}
 
-        <p>
-          <label for="id_profiles">Perfiles y sitios:</label>
-          <ul id="profiles">
+          </p>
+          <p class="short">
+            <label for="id_bio" class="pull-left">Motivación*:</label>
+            &nbsp;<textarea cols="40" id="id_bio" name="bio" rows="10" class="form-control" placeholder="¿Qué es lo que te ha motivado a unirte a Iniciador?" required>{{form.bio.value|default:""}}</textarea>
+            {{form.bio.errors}}
+          </p>
+
+          <p>
+            <label for="id_profiles">Perfiles y sitios:</label>
+            <ul id="profiles">
               <li class="short">
                 <label for="id_linkedin">Linkedin*:</label>
-                <input id="id_linkedin" maxlength="100" name="linkedin" type="text" class="form-control" placeholder="http://es.linkedin.com/in/jimenezortegaraul" required data-toggle="tooltip" data-placement="bottom" title="Revisa que la URL esté bien escrita">
+                <input id="id_linkedin" maxlength="200" name="linkedin" type="text" class="form-control" placeholder="http://es.linkedin.com/in/jimenezortegaraul" value="{{form.linkedin.value|default:""}}" required data-toggle="tooltip" data-placement="bottom" title="Revisa que la URL esté bien escrita">
+                {{form.linkedin.errors}}
               </li>
               <li class="short">
                 <label for="id_twitter">Twitter*:</label>
-                <input id="id_twitter" maxlength="100" name="twitter" type="text" class="form-control" placeholder="http://twitter.com/hhkaos" required  data-toggle="tooltip" data-placement="bottom" title="Revisa que la URL esté bien escrita">
+                <input id="id_twitter" maxlength="200" name="twitter" type="text" class="form-control" placeholder="http://twitter.com/hhkaos" value="{{form.twitter.value|default:""}}" required  data-toggle="tooltip" data-placement="bottom" title="Revisa que la URL esté bien escrita">
+                {{form.twitter.errors}}
               </li>
               <li>
                 <hr>
@@ -68,45 +78,50 @@
                   </li>
                 </ul>
               </li>
-          </ul>
+            </ul>
 
-        </p>
+          </p>
+        </div>
       </div>
-    </div>
-    <div class="col-md-6">
-      <div class="box mb1">
-        <h2>Datos de contacto</h2>
-        <p class="short">
-          <label for="id_primary_email">Email personal*:</label>
-          <input type="text" id="id_primary_email" name="primary_email" placeholder="hhkaos@gmail.com" class="form-control" required  data-toggle="tooltip" data-placement="bottom" title="Revisa que el correo esté bien escrito"></input>
-          <small>Indica un correo que siempre vayas a comprobar (por ej: Gmail)</small>
-        </p>
-        <p class="short">
-          <label for="id_phone">Teléfono(s)*:</label>
-          <input id="id_phone" maxlength="100" name="phone" class="form-control" placeholder="+34 666 777 888, +34 666 999 888, ..." type="text" required>
-        </p>
-        <p class="short">
-          <label for="id_secondary_emails">Otros emails:</label>
-          <input id="id_secondary_emails" name="secondary_emails" class="form-control" placeholder="email@dominio.com, otroMail@dominio.com, ..." type="text" data-toggle="tooltip" data-placement="bottom" title="Revisa que el/los correo(s) esté(n) bien escrito(s)"></input>
-          <small>(Opcional, y separados por comas)</small>
-        </p>
-      </div>
-      <div class="box">
-        <h2>Información del grupo</h2>
-        <p>
-          <label for="id_groups">Grupo o iniciativa a la que te quieres unir:</label>
-          {{form.groups}}
-        </p>
+      <div class="col-md-6">
+        <div class="box mb1">
+          <h2>Datos de contacto</h2>
+          <p class="short">
+            <label for="id_primary_email">Email personal*:</label>
+            <input value="{{form.primary_email.value|default:""}}"type="text" id="id_primary_email" name="primary_email" placeholder="hhkaos@gmail.com" class="form-control" required  data-toggle="tooltip" data-placement="bottom" title="Revisa que el correo esté bien escrito"></input>
+            <small>Indica un correo que siempre vayas a comprobar (por ej: Gmail)</small>
+            {{form.primary_email.errors}}
+          </p>
+          <p class="short">
+            <label for="id_phone">Teléfono(s)*:</label>
+            <input value="{{form.phone.value|default:""}}" id="id_phone" maxlength="100" name="phone" class="form-control" placeholder="+34 666 777 888, +34 666 999 888, ..." type="text" required>
+            {{form.phone.errors}}
+          </p>
+          <p class="short">
+            <label for="id_secondary_emails">Otros emails:</label>
+            <input value="{{form.secondary_emails.value|default:""}}" id="id_secondary_emails" name="secondary_emails" class="form-control" placeholder="email@dominio.com, otroMail@dominio.com, ..." type="text" data-toggle="tooltip" data-placement="bottom" title="Revisa que el/los correo(s) esté(n) bien escrito(s)"></input>
+            <small>(Opcional, y separados por comas)</small>
+            {{form.secondary_emails.errors}}
+          </p>
+        </div>
+        <div class="box">
+          <h2>Información del grupo</h2>
+          <p>
+            <label for="id_groups">Grupo o iniciativa a la que te quieres unir:</label>
+            {{form.groups}}
+            {{form.groups.errors}}
+          </p>
 
-        <p>
-          <label for="id_role">Rol que desempeñas:</label>
-          <input id="id_role" maxlength="100" class="form-control" placeholder="Responsable de grupo" name="role" type="text">
-        </p>
-      </div>
+          <p>
+            <label for="id_role">Rol que desempeñas*:</label>
+            <input value="{{form.role.value|default:""}}" id="id_role" maxlength="100" class="form-control" placeholder="Responsable de grupo" name="role" type="text" required>
+            {{form.role.errors}}
+          </p>
+        </div>
 
-    </div>
-    <div class="col-md-12">
-      <input type="submit" value="Enviar la solicitud" class="pull-right btn btn-lg btn-warning mt1">
-    </div>
-</form>
+      </div>
+      <div class="col-md-12">
+        <input type="submit" value="Enviar la solicitud" class="pull-right btn btn-lg btn-warning mt1">
+      </div>
+    </form>
 {% endblock %}

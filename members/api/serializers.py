@@ -15,6 +15,8 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('url', 'name')
 
 class MemberSerializer(serializers.HyperlinkedModelSerializer):
+    user = serializers.Field(source='owner')
+
     class Meta:
         model = Member
-        fields = ('photo', 'bio')
+        fields = ('user', 'photo', 'bio')

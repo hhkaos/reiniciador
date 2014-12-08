@@ -34,90 +34,42 @@ class SignupView(generic.FormView):
     template_name = 'members/signup.html'
 
     def post(self, request, *args, **kwargs):
-        context = request.POST # self.get_context_data(**kwargs)
+        form = SignupForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
 
-        u, created = User.objects.get_or_create(
-            email = context.get('primary_email'),
-            first_name = context.get('first_name'),
-            last_name = context.get('last_name'),
-            username = context.get('primary_email'),
-        )
-        if created:
-            #
+            # Save photo
+            context = request.POST
+            m = Member.objects.get(user__username=context.get('primary_email'))
+            m.photo = request.FILES['photo']
 
-            m, created = Member.objects.get_or_create(
-                #photo = safe_filename,
-                user = u,
-                bio = context.get('bio'),
-                phone = context.get('phone'),
-                role = context.get('role'),
-                status = 'pending',
-            )
+            # Save profiles
+            num_websites = context.get('num_websites');
+            for i in range(1, int(num_websites) + 1):
+                name = context.get('website_name_'+str(i))
+                url = context.get('website_url_'+str(i))
+                if name and url:
+                    p, created = Profile.objects.get_or_create(url = url.strip(), name = name)
+                    m.profiles.add(p)
 
-            if created:
-                #import ipdb; ipdb.set_trace()
-                m.photo = request.FILES['photo']
-                m.save()
+            m.save()
 
-                groups = request.POST.getlist('groups')
-                for g in groups:
-                    g, created = Group.objects.get_or_create(name = g)
-                    m.groups.add(g)
-
-
-                emails = context.get('secondary_emails');
-                for e in emails.split(','):
-                    e, created = Email.objects.get_or_create(email = e.strip())
-                    m.secondary_emails.add(e)
-
-
-                linkedin = context.get('linkedin')
-                l, created = Profile.objects.get_or_create(url = linkedin, network = 'linkedin')
-                m.profiles.add(l)
-
-                twitter = context.get('twitter')
-                t, created = Profile.objects.get_or_create(url = twitter, network = 'twitter')
-                m.profiles.add(t)
-
-                num_websites = context.get('num_websites');
-                for i in range(1, int(num_websites) + 1):
-                    #import ipdb; ipdb.set_trace()
-                    name = context.get('website_name_'+str(i))
-                    url = context.get('website_url_'+str(i))
-                    if name and url:
-                        p, created = Profile.objects.get_or_create(url = url.strip(), name = name)
-                        m.profiles.add(p)
-
-                m.save()
-
-                if settings.DEBUG == True:
-                    mail_to = "hhkaos@gmail.com"
-                else:
-                    mail_to = context.get('primary_email')
-
-                msg = EmailMultiAlternatives(
-                    subject = "Solicitud de alta",
-                    body = "Hemos recibido tu solicitud de alta",
-                    from_email = settings.FROM_EMAIL,
-                    to=[mail_to]
-                )
-                msg.tags = ["iniciador", "alta"]
-                msg.metadata = {'user_id': u.id}
-                msg.template_name = "alta-iniciador"           # A Mandrill template name
-                msg.global_merge_vars = {                        # Content blocks to fill in
-                    'WEBSITE': "<a href='" + context.get('linkedin') + "/*|TRACKINGNO|*'>Linkedin</a>"
-                }
-                print "Mail sent to:" + mail_to
-                msg.send()
-
-                response = msg.mandrill_response[0]
-                mandrill_id = response['_id']
-            else:
-                print "El miembro ya existe"
+            return HttpResponseRedirect(reverse('members:thanks')) # Redirect after POST
         else:
-            print "El username ya existe"
+            #import ipdb; ipdb.set_trace()
+            context = self.get_context_data(**kwargs)
+            context['form'] = form
+            return self.render_to_response(context)
 
-        return HttpResponseRedirect(reverse('members:thanks'))
+    def get(self, request, *args, **kwargs):
+        form = SignupForm()
+        context = self.get_context_data(**kwargs)
+        context['form'] = form
+
+        return self.render_to_response(context)
+        '''return render(request, 'members/signup2.html', {
+            'form': form,
+        })'''
 
 class ThanksView(generic.TemplateView):
     template_name = 'members/thanks.html'
