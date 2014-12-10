@@ -3,6 +3,18 @@
 This project has been developed to help Iniciador to manage the community in
 the long term.
 
+### Requirements ###
+
+1) Postgre SQL
+apt-get update
+sudo apt-get install postgresql postgresql-contrib postgresql-server-dev-9.3
+
+sudo apt-get install python-dev
+sudo apt-get install libevent-dev
+apt-get install libreadline-gplv2-dev
+apt-get install libncurses5-dev
+
+
 ### How do I get set up? ###
 
 Follow those steps in order to be able to execute this project in local:
