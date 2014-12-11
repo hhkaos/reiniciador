@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block breadcumb %}
+<ol class="breadcrumb">
+  <li><a href="{% url 'home' %}">Inicio</a></li>
+  <li class="active">Iniciador {{g.name}}</a>
+</ol>
+{% endblock %}
+
+{% block body %}
+  <h1>Iniciador {{g.name}}</h1>
+  <p>Detalles del grupo</p>
+
+{% endblock %}

@@ -1,6 +1,26 @@
 {% extends "base.html" %}
 {% block body %}
 <h1>Tu perfil</h1>
-Edición de perfil
-{{user.username}}
+<p>
+  Tu situación actual en Iniciador:
+  <strong>
+  {% if user.member.status = "active" %}
+    Activo
+  {% endif %}
+  {% if user.member.status = "inactive" %}
+    Inactivo
+  {% endif %}
+  {% if user.member.status = "pending" %}
+    Pendiente de aprobación
+  {% endif %}
+  {% if user.member.status = "unknown" %}
+    Desconocido
+  {% endif %}
+  </strong>
+</p>
+<p>
+  Confirmamos por última vez tus datos el <strong>{{user.member.last_activity}}</strong>
+</p>
+<p>Estamos preparando esta sección para que puedas cambiar tus datos, esperamos tenerla pronto disponible.</p>
+
 {% endblock %}

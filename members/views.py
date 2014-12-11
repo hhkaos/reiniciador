@@ -197,3 +197,11 @@ class ProfileView(LoginRequiredMixin, generic.TemplateView):
     def get(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
         return self.render_to_response(context)
+
+class GroupView(generic.TemplateView):
+    template_name = 'members/group.html'
+
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        context['g'] = Group.objects.get(name = context.get('name'))
+        return self.render_to_response(context)

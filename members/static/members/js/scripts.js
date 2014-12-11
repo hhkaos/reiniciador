@@ -14,4 +14,9 @@ $(document).ready(function(){
     $('#num_websites').val(order);
   });
 
+
+  $('#group-detail').submit(function(e){
+    $(this).attr("action", $(this).find("select").val());//e.preventDefault();
+
+  });
 });

@@ -27,3 +27,11 @@ class HomeView(generic.TemplateView):
         context['num_groups'] = len(Group.objects.all())
         context['groups'] = Group.objects.all()
         return self.render_to_response(context)
+
+
+class WebsiteView(generic.TemplateView):
+    template_name = 'members/website.html'
+
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        return self.render_to_response(context)

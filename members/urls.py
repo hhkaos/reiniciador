@@ -5,6 +5,7 @@ urlpatterns = patterns('',
     url(r'^signup/$', views.SignupView.as_view(), name='signup'),
     url(r'^list/$', views.MemberListView.as_view(), name='member_list'),
     #(?P<username>\w+)
+    url(r'^group/(?P<name>\w+)/$', views.GroupView.as_view(), name='group'),
     url(r'^profile/$', views.ProfileView.as_view(), name='profile'),
     url(r'^login/$', 'django.contrib.auth.views.login', name='login'),
     url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': '/'}, name='logout'),

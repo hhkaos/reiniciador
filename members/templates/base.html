@@ -27,12 +27,13 @@
         <!--<li></li>
         <li><a href="{% url 'home' %}"><span class="btn btn-default">Inicio</span></a></li>-->
         {% if not user.is_authenticated %}
+          <li><a href="{% url 'website' %}"><span class="btn btn-default">Roadmap de la web</span></a></li>
           <li><a href="{% url 'members:login' %}"><span class="btn btn-default">Login</span></a></li>
           <li><a href="{% url 'members:signup' %}"><span class="btn btn-primary">Solicitud de alta</span></a></li>
         {% else %}
           <!--<li><a href="{% url 'members:profile' %}"><span class="btn btn-default">Perfil</span></a></li>
           <li><a href="{% url 'members:logout' %}"><span class="btn btn-default">Logout</span></a></li>-->
-          <li>
+          <li class="pull-right" style="margin-right:20px">
             <div class="dropdown" id="user-menu">
 
               <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
@@ -43,6 +44,7 @@
               <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
                 <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url 'home' %}">Inicio</a></li>
                 <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url 'members:profile' %}">Perfil</a></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url 'website' %}">Roadmap</a></li>
                 <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url 'members:logout' %}">Logout</a></li>
               </ul>
             </div>

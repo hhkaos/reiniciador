@@ -7,6 +7,7 @@ from . import views
 urlpatterns = patterns('',
     # Examples:
     url(r'^$', views.HomeView.as_view(), name='home'),
+    url(r'^website/', views.WebsiteView.as_view(), name='website'),
     # url(r'^blog/', include('blog.urls')),
     url(r'^members/', include('members.urls', namespace='members')),
     url(r'^api/', include('members.api.urls', namespace='api-members')),
