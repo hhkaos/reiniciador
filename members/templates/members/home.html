@@ -13,6 +13,7 @@
 </div>
 <p>Iniciador es una fundación tiene como objetivo fomentar y facilitar el emprendimiento en el mundo.</p>
 <p><strong>La comunidad la forman {{num_groups}} equipos que suman <a href="{% url 'members:member_list' %}">{{num_members}} emprendedores</a></strong>  y que organizan voluntariamente eventos para emprendedores periódicamente en diferentes ciudades.
+{% comment %}
 <p>Aquí puedes consultar todos equipos que forman en Iniciador:</p>
 
   <form class="form-inline" id="group-detail" target="_blank">
@@ -25,7 +26,7 @@
     </select>
     <button class="form-control mb1" >Ver</button>
   </form>
-
+{% endcomment %}
 <p>Si en tu ciudad no hay Iniciador o quieres unirte a alguna ciudad puede <a href="{% url 'members:signup' %}">solicitar el alta aquí</a>.</p>
 <h2>Razones para ser organizador en Iniciador</h2>
 <p>Las personas que mejor pueden explicarte los motivos ser organizador son los propios miembros de la comunidad, así que aquí te dejamos unos vídeos que han hecho ellos mismos.</p>
