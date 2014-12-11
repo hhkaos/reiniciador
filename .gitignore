@@ -2,3 +2,6 @@
 staticfiles
 photos/
 local_settings.py
+media/
+members/static/admin/
+members/static/rest_framework/
