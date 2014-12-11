@@ -18,6 +18,7 @@ class MemberList(generics.ListAPIView):
 
 class MemberDetail(generics.RetrieveUpdateAPIView):
     #import ipdb; ipdb.set_trace()
-    queryset = Member.objects.get(user__username='hhkaos')
+    #queryset = Member.objects.get(user__username='hhkaos')
+    queryset = Member.objects.all()
     serializer_class = MemberSerializer
     model = Member
