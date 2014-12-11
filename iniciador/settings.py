@@ -25,7 +25,12 @@ except ImportError as e:
 
 #EMAIL ADDRESS
 FROM_EMAIL = "gerencia@iniciador.com"
-SERVER = 'himan.webfactional.com'
+
+if DEBUG:
+    SERVER = 'localhost:8000'
+else:
+    SERVER = 'reiniciador.com'
+
 ALLOWED_HOSTS = ('reiniciador.com',)
 
 

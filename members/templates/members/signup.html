@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 {% block custom_js %}
-<!--<script src="{% static 'members/js/signup.js' %}" /></script>-->
+<script src="{% static 'members/js/signup.js' %}" /></script>
 {% endblock %}
 
 {% block breadcumb %}
@@ -70,7 +70,7 @@
                 <p><span class="short">Otros sitios:</span> <span class="btn btn-sm btn-info" id="add-website">+Añadir</span></p>
                 <input type="hidden" id="num_websites" name="num_websites" value="1">
                 <ul id="other_profiles">
-                  <li class="short">
+                  <li class="short" data-toggle="tooltip" data-placement="bottom" title="Comprueba los datos">
                     <label for="id_website_name_1">Nombre</label>
                     <input id="id_website_name_1" maxlength="100" name="website_name_1" type="text" placeholder="Blog" class="form-control">
                     <label for="id_website_url_1">URL</label>

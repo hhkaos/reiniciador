@@ -13,8 +13,9 @@ $(document).ready(function(){
   ];
 
   $("#signup-form").submit(function(){
-    var i = 0, j, $input, emails, url;
+    var i = 0, j, $input, $inputs, name, emails, url, form;
 
+    form = this;
     $(this).attr("valid","true");
 
     for(i = 0; i < email_fields.length; i++){
@@ -39,12 +40,31 @@ $(document).ready(function(){
       }
     }
 
+    $("#other_profiles li").each(function(i,elem){
+      $inputs = $(elem).find("input");
+      name = $($inputs[0]).val();
+      url = $($inputs[1]).val();
+
+      if(name || url){
+        if(name.length == 0 || url.length == 0){
+          $(elem).tooltip('show');
+          $(form).attr("valid","false");
+          console.log("Direc. incompleta")
+        }else if(!is_url(url)){
+          $(elem).tooltip('show');
+          $(form).attr("valid","false");
+          console.log("Url inválida")
+        }
+      }
+    })
+
     if($(this).attr("valid") == "false")
       return false;
     else
       return true;
   });
 });
+
 
 function is_url(url) {
   var reurl = /^(http[s]?:\/\/){1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/;
