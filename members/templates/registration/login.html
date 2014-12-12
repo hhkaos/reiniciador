@@ -1,10 +1,24 @@
 {% extends "base.html" %}
 {% block body %}
-  <form method="post" action="{% url 'members:login' %}">
-    {% csrf_token %}
-    {{form}}
 
-    <input type="submit" value="login" />
+
+
+  <form method="post" action="{% url 'members:login' %}" id="login-form" class="centered">
+    {% csrf_token %}
     <input type="hidden" name="next" value="{{ next }}" />
+    <div class="form-group">
+      <label for="id_username">Email:</label>
+      <input id="id_username" class="form-control" maxlength="254" name="username" type="text" data-cip-id="id_username" placeholder="Introduce tu email" value="{{form.username.value|default:""}}">
+      {{form.username.errors}}
+    </div>
+    <div class="form-group">
+      <label for="exampleInputPassword1">Contraseña:</label>
+      <input id="id_password" name="password" type="password" data-cip-id="id_password" class="form-control" placeholder="Introduce tu contraseña">
+      {{form.password.errors}}
+    </div>
+    {{ form.non_field_errors }}
+    <p class="center"><small>Si has perdido tu contraseña ponte en contacto con gerencia@iniciador.com</small></p>
+    <button type="submit" class="btn btn-primary btn-block mt1">Entrar</button>
   </form>
+
 {% endblock %}
