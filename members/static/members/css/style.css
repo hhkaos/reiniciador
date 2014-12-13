@@ -260,7 +260,10 @@ label[for="id_profiles"]{
   text-transform: capitalize;
 
 }
-
+a.profile-link{
+  text-decoration: none;
+  font-size: 22px;
+}
 /*******************************
 
           WEBSITE

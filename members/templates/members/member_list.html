@@ -15,19 +15,27 @@
       {% if m.status = "active" %}
         <li class="member-box">
           <div class="img" style="background-image:url(/media/{{m.photo}})"></div><br>
-          <a href="#">
-            {{m}}
-          </a>
+          <p>
+            <a href="#">
+              {{m}}
+            </a>
+          </p>
+          <p>
+            {% for g in m.groups.all %}
+              {{g}}<br>
+            {% endfor %}
+          </p>
           <p class="networks">
             {% for p in m.profiles.all %}
-              <a href="{{p.url}}" class="{{p.name}} {{p.network}}">
-                {{p.name}} {{p.network}}
+              <a
+                href="{{p.url}}"
+                title="{{p.name|capfirst|default:""}} {% if p.network != "other" %}{{p.network|default:""}}{% endif %}"
+                class="profile-link"
+              >
+                <i class="icon-world icon-{{p.name}} icon-{{p.network}}"></i>
               </a>
             {% endfor %}
           </p>
-          {% for g in m.groups.all %}
-            {{g}}<br>
-          {% endfor %}
         </li>
       {% endif %}
     {% endfor %}
