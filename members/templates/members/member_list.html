@@ -22,7 +22,12 @@
           </p>
           <p>
             {% for g in m.groups.all %}
-              Iniciador {{g}}<br>
+              {% if g = "Patronato" %}
+                Iniciador {{g}}
+              {% else %}
+                {{g}} Iniciador
+              {% endif %}
+              <br>
             {% endfor %}
           </p>
           <p class="networks">
