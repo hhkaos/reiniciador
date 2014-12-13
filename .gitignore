@@ -1,7 +1,7 @@
 *.pyc
 staticfiles
 local_settings.py
-media/
-static/
-
-members/static/rest_framework/
+/media/
+/static/
+/members/static/admin/
+/members/static/rest_framework/
