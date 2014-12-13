@@ -1,7 +1,7 @@
 *.pyc
 staticfiles
-photos/
 local_settings.py
 media/
+static/
 members/static/admin/
 members/static/rest_framework/

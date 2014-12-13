@@ -23,9 +23,6 @@ try:
 except ImportError as e:
     pass
 
-#EMAIL ADDRESS
-FROM_EMAIL = "gerencia@iniciador.com"
-
 if DEBUG:
     SERVER = 'localhost:8000'
 else:
@@ -46,6 +43,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'members',
     'djrill',
+    'debug_toolbar',
     'rest_framework',
 )
 
@@ -56,6 +54,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 )
 
 ROOT_URLCONF = 'iniciador.urls'
