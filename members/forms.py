@@ -31,7 +31,7 @@ class SignupForm(forms.Form):
     groups = forms.ModelMultipleChoiceField(queryset=Group.objects.all(), required=True)
 
     def save(self):
-        #import ipdb; ipdb.set_trace()
+
         data = self.cleaned_data
 
         u = User.objects.create(
@@ -74,7 +74,8 @@ class SignupForm(forms.Form):
         m.profiles.add(t)
 
         # Send mail to user
-        mail_to = settings.ADMIN_EMAIL if settings.DEBUG else context.get('primary_email')
+        #import ipdb; ipdb.set_trace()
+        mail_to = settings.ADMIN_EMAIL if settings.DEBUG else data.get("primary_email")
 
         msg = EmailMultiAlternatives(
             subject = "Solicitud de alta",
