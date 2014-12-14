@@ -45,6 +45,7 @@ INSTALLED_APPS = (
     'djrill',
     'debug_toolbar',
     'rest_framework',
+    'raven.contrib.django.raven_compat',
 )
 
 MIDDLEWARE_CLASSES = (

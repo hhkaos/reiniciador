@@ -5,3 +5,4 @@ local_settings.py
 /static/
 /members/static/admin/
 /members/static/rest_framework/
+/members/static/debug_toolbar/
