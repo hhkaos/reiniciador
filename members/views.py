@@ -203,5 +203,5 @@ class GroupView(generic.TemplateView):
 
     def get(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
-        context['g'] = Group.objects.get_object_or_404(name = context.get('name'))
+        context['g'] = get_object_or_404(Group, name = context.get('name'))
         return self.render_to_response(context)
