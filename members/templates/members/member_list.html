@@ -22,7 +22,7 @@
           </p>
           <p>
             {% for g in m.groups.all %}
-              {% if g = "Patronato" %}
+              {% if g.name != "Patronato" %}
                 Iniciador {{g}}
               {% else %}
                 {{g}} Iniciador
