@@ -6,6 +6,7 @@ from django.core.mail import EmailMultiAlternatives
 
 from .models import Member
 from .models import Group
+from .models import Email
 from .models import Profile
 from django.contrib.auth.models import User
 
