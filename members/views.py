@@ -205,3 +205,12 @@ class GroupView(generic.TemplateView):
         context = self.get_context_data(**kwargs)
         context['g'] = get_object_or_404(Group, name=context.get('name'))
         return self.render_to_response(context)
+
+class AllMembersView(generic.TemplateView):
+    template_name = 'members/all_members.html'
+
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        context['members'] = Member.objects.all()
+
+        return self.render_to_response(context)
