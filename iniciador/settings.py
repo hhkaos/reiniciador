@@ -28,9 +28,6 @@ if DEBUG:
 else:
     SERVER = 'reiniciador.com'
 
-ALLOWED_HOSTS = ('reiniciador.com',)
-
-
 # Application definition
 
 INSTALLED_APPS = (
