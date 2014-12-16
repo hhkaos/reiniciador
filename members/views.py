@@ -74,6 +74,9 @@ class SignupView(generic.FormView):
 class ThanksView(generic.TemplateView):
     template_name = 'members/thanks.html'
 
+class DashboardView(generic.TemplateView):
+    template_name = 'members/dashboard.html'
+
 class MemberListView(generic.TemplateView):
     template_name = 'members/member_list.html'
 

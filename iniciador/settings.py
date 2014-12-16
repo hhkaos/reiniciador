@@ -15,7 +15,7 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-LOGIN_REDIRECT_URL = '/members/profile/'
+LOGIN_REDIRECT_URL = '/members/dashboard/'
 LOGOUT_URL = '/'
 
 try:

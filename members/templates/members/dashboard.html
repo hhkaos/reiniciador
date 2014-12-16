@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block breadcumb %}
+  <ol class="breadcrumb">
+    <li><a href="{% url 'home' %}">Inicio</a></li>
+    <li class="active">Dashboard</a>
+  </ol>
+{% endblock %}
+
+
+{% block body %}
+<h1>Dashboard</h1>
+
+<p>Primeros pasos:</p>
+<ol>
+  <li>Échale un ojo al: Welcome pack</li>
+  <li>Solicita tu cuenta de correo ...@reiniciador.com</li>
+  <li>Preséntate en Yammer!</li>
+</ol>
+
+<p>Sistemas:</p>
+<ul>
+  <li><a href="http://iniciador.com">Iniciador.com</a>: Página oficial de Iniciador (eventos, noticias, etc.)</li>
+  <li><a href="https://www.yammer.com/reiniciador.com/?show_login=true">Yammer: Reiniciador.com</a>: Red social privada de la comunidad</li>
+  <li><a href="https://www.linkedin.com/groups/Iniciador-Grupo-emprendedores-150876?gid=150876&mostPopular=&trk=tyah&trkInfo=tarId%3A1418692247943%2Ctas%3Ainiciador%2Cidx%3A3-1-7">Grupo abierto de Linkedin</a>: Grupo abierto de Iniciador en Linkedin</li>
+  <li><a href="https://www.linkedin.com/groups?gid=8182411&mostPopular=&trk=tyah&trkInfo=tarId%3A1418692058358%2Ctas%3Ainiciador%20te%2Cidx%3A1-2-2">Iniciador Team (Linkedin)</a> - Proximamente sustituido por Yammer</li>
+</ul>
+{% endblock %}
