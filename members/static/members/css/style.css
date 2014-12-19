@@ -96,6 +96,12 @@ h2{
   display: block;
 }
 
+.tab-content{
+  border: 1px solid #DDD;
+  border-top: 0;
+  padding: 2em 1em 1em;
+}
+
 ul.errorlist{
   list-style: none;
   padding: .3em .7em !important;

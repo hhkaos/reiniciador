@@ -2,28 +2,69 @@
 {% load staticfiles %}
 
 {% block breadcumb %}
-  <ol class="breadcrumb">
+  <!--<ol class="breadcrumb">
     <li><a href="{% url 'home' %}">Inicio</a></li>
     <li class="active">Dashboard</a>
-  </ol>
+  </ol>-->
 {% endblock %}
 
 
 {% block body %}
-<h1>Dashboard</h1>
 
-<p>Primeros pasos:</p>
-<ol>
-  <li>Échale un ojo al: Welcome pack</li>
-  <li>Solicita tu cuenta de correo ...@reiniciador.com</li>
-  <li>Preséntate en Yammer!</li>
-</ol>
 
-<p>Sistemas:</p>
-<ul>
-  <li><a href="http://iniciador.com">Iniciador.com</a>: Página oficial de Iniciador (eventos, noticias, etc.)</li>
-  <li><a href="https://www.yammer.com/reiniciador.com/?show_login=true">Yammer: Reiniciador.com</a>: Red social privada de la comunidad</li>
-  <li><a href="https://www.linkedin.com/groups/Iniciador-Grupo-emprendedores-150876?gid=150876&mostPopular=&trk=tyah&trkInfo=tarId%3A1418692247943%2Ctas%3Ainiciador%2Cidx%3A3-1-7">Grupo abierto de Linkedin</a>: Grupo abierto de Iniciador en Linkedin</li>
-  <li><a href="https://www.linkedin.com/groups?gid=8182411&mostPopular=&trk=tyah&trkInfo=tarId%3A1418692058358%2Ctas%3Ainiciador%20te%2Cidx%3A1-2-2">Iniciador Team (Linkedin)</a> - Proximamente sustituido por Yammer</li>
-</ul>
+<script type="text/javascript" src="https://assets.yammer.com/assets/platform_embed.js"></script>
+<script>
+$(document).ready(function(){
+  $('#myTab a').click(function (e) {
+    e.preventDefault()
+    $(this).tab('show')
+  })
+  yam.connect.embedFeed({
+    container: "#embedded-feed",
+    network: "reiniciador.com",
+    feedType: "group",
+    feedId: "all"});
+});
+</script>
+
+
+
+
+
+  <div role="tabpanel">
+
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+      <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Recursos</a></li>
+      <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Yammer</a></li>
+      <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Sistemas</a></li>
+      <!--<li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>-->
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane active" id="home">
+        <ol>
+          <li>Échale un ojo al: <a href="https://drive.google.com/folderview?id=0BzSfMwbfluEpMTEzN2FiN2QtODBlNy00ZjliLWE4ODUtNTQ0NTUwMjA0NzAx&usp=drive_web#">Manual de operaciones</a> (mientras terminamos el <i>Welcome pack</i>)</li>
+        </ol>
+      </div>
+      <div role="tabpanel" class="tab-pane" id="profile">
+        <p>Para poder acceder a Yammer necesitas una cuenta de correo @reiniciador.com. Preséntate a los demás cuando tengas tu cuenta!</p>
+        <div id="embedded-feed" style="height:800px;width:100%;"></div>
+
+      </div>
+      <div role="tabpanel" class="tab-pane" id="messages">
+        <ul>
+          <li><a href="http://iniciador.com">Iniciador.com</a>: Página oficial de Iniciador (eventos, noticias, etc.)</li>
+          <li><a href="https://www.yammer.com/reiniciador.com/?show_login=true">Yammer: Reiniciador.com</a>: Red social privada de la comunidad</li>
+          <li><a href="https://www.linkedin.com/groups/Iniciador-Grupo-emprendedores-150876?gid=150876&mostPopular=&trk=tyah&trkInfo=tarId%3A1418692247943%2Ctas%3Ainiciador%2Cidx%3A3-1-7">Grupo abierto de Linkedin</a>: Grupo abierto de Iniciador en Linkedin</li>
+          <li><a href="https://www.linkedin.com/groups?gid=8182411&mostPopular=&trk=tyah&trkInfo=tarId%3A1418692058358%2Ctas%3Ainiciador%20te%2Cidx%3A1-2-2">Iniciador Team (Linkedin)</a> - Proximamente sustituido por Yammer</li>
+        </ul>
+      </div>
+      <!--<div role="tabpanel" class="tab-pane" id="settings">...</div>-->
+    </div>
+
+  </div>
+
+
 {% endblock %}
