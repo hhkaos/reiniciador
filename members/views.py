@@ -86,76 +86,6 @@ class MemberListView(generic.TemplateView):
 
         return self.render_to_response(context)
 
-class PingMembersView(generic.TemplateView):
-    template_name = 'members/ping.html'
-
-    def get(self, request, *args, **kwargs):
-        context = self.get_context_data(**kwargs)
-
-        members = Member.objects.exclude(status='inactive').exlude(status='pending')
-        check = []
-        notify = []
-        today = date.today()
-
-        for m in members:
-            d = today - m.last_activity
-            #import ipdb; ipdb.set_trace()
-            if d.days == 60:
-                m.status = 'unknown'
-                m.save()
-                check.append(m)
-
-            elif d.days == 70:
-                notify.append(m)
-
-        for c in check:
-            msg = EmailMultiAlternatives(
-                to = [c.user.email],
-                from_email = settings.FROM_EMAIL
-            )
-            groups = []
-            for g in members[0].groups.all():
-                groups.append(g.name)
-            groups = ', '.join(g for g in groups)
-
-            msg.tags = ["iniciador", "check", today]
-            msg.template_name = "checkeo-iniciador"
-            msg.global_merge_vars = {
-                'NAME': c.user.first_name,
-                'GROUPS': groups,
-                'EMAIL': c.user.email,
-                'PHONE': c.phone,
-                'WEBSITE': settings.SERVER,
-                'LINK': 'http://' + settings.SERVER + '/members/revision/' + c.user.username,
-                'HASH': hashlib.sha224(str(c.last_activity) + str(c.user.id)).hexdigest()
-            }
-
-            msg.send()
-            response = msg.mandrill_response[0]
-            mandrill_id = response['_id']
-
-        #TODO: Terminar la notificacion a la organizacion
-        for n in notify:
-            msg = EmailMultiAlternatives(
-                to=[n.user.email],
-                from_email = settings.FROM_EMAIL
-            )
-            msg.tags = ["iniciador", "notify", today]
-            msg.template_name = "notificar-iniciador"           # A Mandrill template name
-            msg.global_merge_vars = {                        # Content blocks to fill in
-                'WEBSITE': "<a href='/*|TRACKINGNO|*'>Linkedin</a>",
-                #user data
-            }
-
-            #msg.send()
-            #response = msg.mandrill_response[0]
-            #mandrill_id = response['_id']
-
-        context['notified'] = notify
-        context['checked'] = check
-
-        return self.render_to_response(context)
-
 class ReviewView(generic.TemplateView):
     template_name = 'members/review.html'
 
@@ -180,6 +110,7 @@ class ReviewView(generic.TemplateView):
                 pass
             elif status == 'unsuscribe':
                 u.status = 'inactive'
+                u.last_activity = date.today()
                 u.save()
                 #TODO: send an email to the organization
             else:
@@ -199,6 +130,19 @@ class ProfileView(LoginRequiredMixin, generic.TemplateView):
 
     def get(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
+        return self.render_to_response(context)
+
+class ResetPassView(generic.TemplateView):
+    template_name = 'registration/reset_password.html'
+
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        context['request'] = "GET"
+        return self.render_to_response(context)
+
+    def post(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        context['request'] = "POST"
         return self.render_to_response(context)
 
 class GroupView(generic.TemplateView):
