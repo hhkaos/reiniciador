@@ -7,7 +7,7 @@
     {% csrf_token %}
     <input type="hidden" name="next" value="{{ next }}" />
     <div class="form-group">
-      <label for="id_username">Email:</label>
+      <label for="id_username">Usuario/Email:</label>
       <input id="id_username" class="form-control" maxlength="254" name="username" type="text" data-cip-id="id_username" placeholder="Introduce tu email" value="{{form.username.value|default:""}}">
       {{form.username.errors}}
     </div>

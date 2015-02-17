@@ -34,12 +34,12 @@ class SignupForm(forms.Form):
     def save(self):
 
         data = self.cleaned_data
-
+        
         u = User.objects.create(
             email = data.get("primary_email"),
             first_name = data.get("first_name"),
             last_name = data.get("last_name"),
-            username = data.get("primary_email"),
+            username = data.get("primary_email").split("@")[0][:30],
         )
         password = User.objects.make_random_password()
         u.set_password(password)
@@ -89,6 +89,7 @@ class SignupForm(forms.Form):
         msg.global_merge_vars = {
             'NAME': data.get("first_name"),
             'PASSWORD': password,
+            'USERNAME': data.get("primary_email").split("@")[0][:30],
             #'WEBSITE': "<a href='" + data.get('linkedin') + "/*|TRACKINGNO|*'>Linkedin</a>"
         }
         print "Mail sent to:" + mail_to
