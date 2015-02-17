@@ -17,6 +17,7 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 
 LOGIN_REDIRECT_URL = '/members/dashboard/'
 LOGOUT_URL = '/'
+SERVER_EMAIL = 'raul@reiniciador.com'
 
 try:
     from local_settings import *
