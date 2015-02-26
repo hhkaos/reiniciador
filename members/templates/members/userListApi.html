@@ -1,0 +1,11 @@
+{ 
+	"organizers": [
+		{% for m in members %}
+			{% if forloop.last %}
+				{{m.id_iniciador}}
+			{% else %}
+				{{m.id_iniciador}},
+			{% endif %}
+		{% endfor %}
+	]
+}

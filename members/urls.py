@@ -7,6 +7,7 @@ urlpatterns = patterns('',
     #(?P<username>\w+)
     url(r'^group/(?P<name>\w+)/$', views.GroupView.as_view(), name='group'),
     url(r'^member/(?P<id>\w+)/$', views.UserAPI.as_view(), name='user-api'),
+    url(r'^list/json/$', views.UserListAPI.as_view(), name='user-list-api'),
     url(r'^dashboard/$', views.DashboardView.as_view(), name='dashboard'),
     url(r'^profile/$', views.ProfileView.as_view(), name='profile'),
     url(r'^all/$', views.AllMembersView.as_view(), name='all-members'),

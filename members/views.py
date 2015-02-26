@@ -166,22 +166,18 @@ class AllMembersView(generic.TemplateView):
 class UserAPI(generic.TemplateView):
     template_name = 'members/userApi.html'
 
-    def render_to_json_response(self, context, **response_kwargs):
-        """
-        Returns a JSON response, transforming 'context' to make the payload.
-        """
-        return JsonResponse(
-            self.get_data(context),
-            **response_kwargs
-        )
-
     def get(self, request, *args, **kwargs):
-        
-
         context = self.get_context_data(**kwargs)
         m = get_object_or_404(Member, id_iniciador=context['id'])
-
         context['member'] = m
-        
+
+        return self.render_to_response(context)
+
+class UserListAPI(generic.TemplateView):
+    template_name = 'members/userListApi.html'
+
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        context['members'] = Member.objects.all()
 
         return self.render_to_response(context)
