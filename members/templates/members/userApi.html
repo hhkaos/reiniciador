@@ -1,0 +1,36 @@
+{ 
+	
+	{% if member.user.first_name %}
+		"first_name": "{{member.user.first_name}}",
+	{% endif %}
+	{% if member.user.last_name %}
+		"last_name": "{{member.user.last_name}}",
+	{% endif %}
+	{% if member.photo %}
+		"photo": "http://reiniciador.com/media/{{member.photo}}",
+	{% endif %}
+	{% if member.id_iniciador %}
+		"id_iniciador": {{member.id_iniciador}},
+	{% endif %}
+	{% if member.bio %}
+		"bio": "{{member.bio}}",
+	{% endif %}
+	{% if member.role %}
+		"role": "{{member.role}}",
+	{% endif %}
+	"profiles":[
+		{% for i in member.profiles.all %}
+			{% if forloop.last %}
+				{"{{i.network}}": "{{i.url}}"}
+			{% else %}
+				{"{{i.network}}": "{{i.url}}"},
+			{% endif %}
+		{% endfor %}
+	],
+
+	"groups":[
+		{% for g in member.groups.all %}
+			"{{g.name}}",
+		{% endfor %}
+	]
+}

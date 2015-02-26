@@ -19,6 +19,7 @@ from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 #from django.shortcuts import get_or_create
 from django.views import generic
+from django.http import JsonResponse
 
 
 
@@ -159,5 +160,28 @@ class AllMembersView(generic.TemplateView):
     def get(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
         context['members'] = Member.objects.all()
+
+        return self.render_to_response(context)
+
+class UserAPI(generic.TemplateView):
+    template_name = 'members/userApi.html'
+
+    def render_to_json_response(self, context, **response_kwargs):
+        """
+        Returns a JSON response, transforming 'context' to make the payload.
+        """
+        return JsonResponse(
+            self.get_data(context),
+            **response_kwargs
+        )
+
+    def get(self, request, *args, **kwargs):
+        
+
+        context = self.get_context_data(**kwargs)
+        m = get_object_or_404(Member, id_iniciador=context['id'])
+
+        context['member'] = m
+        
 
         return self.render_to_response(context)

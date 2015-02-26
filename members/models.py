@@ -18,6 +18,7 @@ class Member(TimeStampedModel):
     )
 
     photo = models.FileField(upload_to='photos/', null=True, blank=True)
+    id_iniciador = models.IntegerField(null=True)
     user = models.OneToOneField(User, related_name='member')
     bio = models.TextField(blank=True)
     phone = models.CharField(blank=False, max_length=100)
@@ -33,7 +34,7 @@ class Member(TimeStampedModel):
         return u"{self.user.first_name} {self.user.last_name}".format(self=self)
 
     def owner(self):
-        return user.email
+        return self.user
 
 class Profile(models.Model):
     NETWORK = Choices(
