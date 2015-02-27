@@ -18,7 +18,7 @@ class Member(TimeStampedModel):
     )
 
     photo = models.FileField(upload_to='photos/', null=True, blank=True)
-    id_iniciador = models.IntegerField(null=True)
+    id_iniciador = models.IntegerField(null=True, blank=True)
     user = models.OneToOneField(User, related_name='member')
     bio = models.TextField(blank=True)
     phone = models.CharField(blank=False, max_length=100)
