@@ -48,7 +48,7 @@ class Profile(models.Model):
     network = models.CharField(null=True, choices=NETWORK, max_length=100)
 
     def __str__(self):
-        return self.url
+        return self.id
 
 @python_2_unicode_compatible
 class Group(models.Model):
@@ -63,4 +63,4 @@ class Email(models.Model):
     email = models.EmailField(primary_key=True, null=False)
 
     def __str__(self):
-        return self.email
+        return self.id
