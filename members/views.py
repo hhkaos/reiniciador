@@ -39,6 +39,7 @@ class SignupView(generic.FormView):
         if form.is_valid():
             form.save()
 
+            #import ipdb; ipdb.set_trace()
             # Save photo
             context = request.POST
             m = Member.objects.get(user__username=context.get('primary_email').split("@")[0][:30])
