@@ -325,3 +325,18 @@ a.profile-link{
 #community td{
   vertical-align: middle;
 }
+#dLabel{
+  border: 0;
+  background-color: transparent;
+}
+.open>.dropdown-menu{
+  
+}
+.open>.dropdown-menu li{
+  padding: .25em .5em;
+  font-weight: normal;
+}
+.open>.dropdown-menu li:hover{
+  background-color: #eee;
+  cursor: pointer;
+}

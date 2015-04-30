@@ -159,6 +159,7 @@ class AllMembersView(generic.TemplateView):
 
     def get(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
+        context['groups'] = Group.objects.all().order_by("name")
         context['members'] = Member.objects.all()
 
         return self.render_to_response(context)

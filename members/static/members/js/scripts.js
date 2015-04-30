@@ -19,4 +19,17 @@ $(document).ready(function(){
     $(this).attr("action", $(this).find("select").val());//e.preventDefault();
 
   });
+
+  $(".dropdown-menu li").click(function(e){
+    var $t = $(this);
+    $(".dropdown-menu li.active").removeClass("active");
+    $t.addClass("active");
+//debugger;
+    if($t.data("group")=="all"){
+      $("#community tbody tr").show();
+    }else{
+      $("#community tbody tr:not("+ $t.data("group") +")").hide();
+      $("#community tbody tr."+ $t.data("group")).show();
+    }
+  });
 });
