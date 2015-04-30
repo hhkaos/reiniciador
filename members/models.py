@@ -36,6 +36,7 @@ class Member(TimeStampedModel):
     def owner(self):
         return self.user
 
+@python_2_unicode_compatible
 class Profile(models.Model):
     NETWORK = Choices(
         ('linkedin', 'Linkedin'),
@@ -48,7 +49,7 @@ class Profile(models.Model):
     network = models.CharField(null=True, choices=NETWORK, max_length=100)
 
     def __str__(self):
-        return str(self.pk)
+        return self.pk
 
 @python_2_unicode_compatible
 class Group(models.Model):
@@ -59,8 +60,9 @@ class Group(models.Model):
     def __str__(self):
         return self.name
 
+@python_2_unicode_compatible
 class Email(models.Model):
     email = models.EmailField(primary_key=True, null=False)
 
     def __str__(self):
-        return str(self.pk)
+        return self.pk
