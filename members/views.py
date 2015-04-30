@@ -42,7 +42,6 @@ class SignupView(generic.FormView):
             # Save photo
             context = request.POST
             m = Member.objects.get(user__username=context.get('primary_email').split("@")[0][:30])
-            m.photo = request.FILES['photo']
 
             # Save profiles
             num_websites = context.get('num_websites');

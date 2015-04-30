@@ -51,6 +51,7 @@ class SignupForm(forms.Form):
             phone = data.get('phone'),
             role = data.get('role'),
             status = 'pending',
+            foto = data.get('photo')
         )
 
         #import ipdb; ipdb.set_trace()
