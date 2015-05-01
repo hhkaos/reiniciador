@@ -340,3 +340,6 @@ a.profile-link{
   background-color: #eee;
   cursor: pointer;
 }
+.open>.dropdown-menu li.active{
+  font-weight: bold;
+}

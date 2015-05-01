@@ -10,18 +10,7 @@
 
   {% block body %}
   <h1>Miembros de la comunidad de Iniciador</h1>
-<div class="dropdown">
-            <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Grupo(s)
-              <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-              <li>Todos</li>
-              {% for g in groups %}
-                <li>{{g}}</li>
-              {% endfor %}
-            </ul>
-          </div>
+
   {% if user.member.status = "active" %}
     <table id="community" class="table table-striped table-hover">
       <thead>
@@ -36,8 +25,8 @@
               Grupo(s)
               <span class="caret"></span>
             </button>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-              <li data-group="all">Todos</li>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel" id="cityList">
+              <li data-group="all" class="active">Todos</li>
               {% for g in groups %}
                 <li data-group="{{g|slugify}}">{{g}}</li>
               {% endfor %}

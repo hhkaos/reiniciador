@@ -32,4 +32,11 @@ $(document).ready(function(){
       $("#community tbody tr."+ $t.data("group")).show();
     }
   });
+
+  $("#cityList li").each(function(){
+    var $t = $(this),
+        len = $("#community tbody tr."+ $t.data("group")).length;
+    console.log($t.data("group")+ ":"+len);
+    $t.text($t.text()+" ("+len+")");
+  });
 });
