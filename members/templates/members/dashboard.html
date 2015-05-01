@@ -30,26 +30,26 @@ $(document).ready(function(){
 
 
 
-
+<a class="btn btn-warning pull-right" href="{% url 'members:all-members' %}">Conoce quienes son los demás organizadores</a>
   <div role="tabpanel">
 
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
-      <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Recursos</a></li>
-      <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Yammer</a></li>
+      <li role="presentation" class="active"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Yammer</a></li>
+      <li role="presentation" ><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Recursos</a></li>
       <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Sistemas</a></li>
       <!--<li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>-->
     </ul>
 
     <!-- Tab panes -->
     <div class="tab-content">
-      <div role="tabpanel" class="tab-pane active" id="home">
+      <div role="tabpanel" class="tab-pane " id="home">
         <ol>
           <li>Échale un ojo al: <a href="https://drive.google.com/folderview?id=0BzSfMwbfluEpMTEzN2FiN2QtODBlNy00ZjliLWE4ODUtNTQ0NTUwMjA0NzAx&usp=drive_web#">Manual de operaciones</a> (mientras terminamos el <i>Welcome pack</i>)</li>
         </ol>
       </div>
-      <div role="tabpanel" class="tab-pane" id="profile">
-        <p>Para poder acceder a Yammer necesitas una cuenta de correo @reiniciador.com. Preséntate a los demás cuando tengas tu cuenta!</p>
+      <div role="tabpanel" class="tab-pane active" id="profile">
+        <p>Para poder acceder a Yammer necesitas una cuenta de correo @reiniciador.com (que te crearán en breve desde gerencia). Preséntate en la cafetería a los demás cuando tengas tu cuenta!</p>
         <div id="embedded-feed" style="height:800px;width:100%;"></div>
 
       </div>

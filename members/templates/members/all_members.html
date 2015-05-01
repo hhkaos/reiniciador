@@ -26,7 +26,7 @@
               <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel" id="cityList">
-              <li data-group="all" class="active">Todos</li>
+              <li data-group="all" class="active all">Todos</li>
               {% for g in groups %}
                 <li data-group="{{g|slugify}}">{{g}}</li>
               {% endfor %}
