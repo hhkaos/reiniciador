@@ -17,7 +17,7 @@ urlpatterns = patterns('',
     url(r'^password/reset/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$', 'django.contrib.auth.views.password_reset_confirm', {'post_reset_redirect' : '/members/password/done/'}, name='password_reset_confirm'),
     url(r'^password/done/$', 'django.contrib.auth.views.password_reset_complete', name='password_reset_complete'),
     url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': '/'}, name='logout'),
-    url(r'^revision/(?P<username>\w+)/(?P<hash>\w+)/(?P<status>\w+)/$', views.ReviewView.as_view(), name='review'),
+    url(r'^revision/(?P<username>.+)/(?P<hash>\w+)/(?P<status>\w+)/$', views.ReviewView.as_view(), name='review'),
     url(r'^signup/thanks/$', views.ThanksView.as_view(), name='thanks'),
 
 )
