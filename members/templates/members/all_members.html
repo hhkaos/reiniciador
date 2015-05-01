@@ -43,7 +43,7 @@
       <tbody>
       {% for m in members %}
         {% if m.status = "active" or m.status = "unknown" %}
-        <tr class="{% for g in m.groups.all %}{{g|slugify}}{% endfor %}">
+        <tr class="{% for g in m.groups.all %}{{g|slugify}}{% endfor %} all">
           <td><div class="img" style="background-image:url(/media/{{m.photo}})"></div></td>
           <td>{{m.user.first_name}}</td>
           <td>{{m.user.last_name}}</td>
