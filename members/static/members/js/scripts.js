@@ -24,7 +24,7 @@ $(document).ready(function(){
     var $t = $(this);
     $(".dropdown-menu li.active").removeClass("active");
     $t.addClass("active");
-//debugger;
+
     if($t.data("group")=="all"){
       $("#community tbody tr").show();
     }else{

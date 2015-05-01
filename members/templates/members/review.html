@@ -9,7 +9,7 @@
       ¡Tus datos han sido confirmados, gracias!
     {% else %}
       {% if status = 'invalid' %}
-        Por favor <a href="{% url 'members:login' %}">identifícate con tu cuenta</a> y actualízalos
+        Por favor escribe a <a href="mailto:gerencia@iniciador.com">gerencia@iniciador.com</a> indicando qué datos no son correctos y pídeles que pongan tu estado en Reiniciador como: activo.
       {% else %}
         {% if status = 'unsuscribe' %}
           Gracias por avisarnos, ya no recibirás más correos como este.

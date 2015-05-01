@@ -33,15 +33,15 @@ class Command(BaseCommand):
             d = today - m.last_activity
             self.stdout.write('%s = %i' % (m.user.username, d.days))
             #import ipdb; ipdb.set_trace()
-            if (d.days == 60) | (d.days == 34):
+            if (d.days > 60) & (m.status != 'unknown') & (d.days < 181):
                 m.status = 'unknown'
                 m.save()
                 check.append(m)
-                self.stdout.write('Notificado (%i dias): "%s"' % (d.days, m.user.username))
+                self.stdout.write('Pedir validacion (%i dias): "%s"' % (d.days, m.user.username))
 
-            elif d.days == 70:
+            elif d.days > 180:
                 notify.append(m)
-                self.stdout.write('Notificado (70 dias): "%s"' % m.user.username)
+                self.stdout.write('Notificar a gerencia (180 dias): "%s"' % m.user.username)
 
         # Send emails to user that need to validate their data
         for c in check:
@@ -81,20 +81,37 @@ class Command(BaseCommand):
 
         #TODO: Terminar la notificacion a la organizacion
         for n in notify:
+            mail_to = settings.ADMIN_EMAIL if settings.DEBUG else n.user.email
+
             msg = EmailMultiAlternatives(
-                to=[n.user.email],
+                to = [mail_to],
                 from_email = settings.FROM_EMAIL
             )
+            groups = []
+            for g in n.groups.all():
+                groups.append(g.name)
+            groups = ', '.join(g for g in groups)
+
+            emails = [n.user.email]
+            for e in n.secondary_emails.all():
+                emails.append(e.email)
+            emails = ', '.join(e for e in emails)
             msg.tags = ["iniciador", "notify", today]
-            msg.template_name = "notificar-iniciador"           # A Mandrill template name
+            msg.template_name = "notificar-organizador-no-responde"           # A Mandrill template name
             msg.global_merge_vars = {                        # Content blocks to fill in
-                'WEBSITE': "<a href='/*|TRACKINGNO|*'>Linkedin</a>",
-                #user data
+                'NAME': n.user.first_name,
+                'LASTNAME': n.user.last_name,
+                'GROUPS': groups,
+                'EMAIL': emails,
+                'PHONE': n.phone,
+                'WEBSITE': settings.SERVER,
+                'LINK': 'http://' + settings.SERVER + '/members/revision/' + n.user.username,
+                'HASH': hashlib.sha224(str(n.last_activity) + str(n.user.id)).hexdigest()
             }
 
-            #msg.send()
-            #response = msg.mandrill_response[0]
-            #mandrill_id = response['_id']
+            msg.send()
+            response = msg.mandrill_response[0]
+            mandrill_id = response['_id']
 
         #context['notified'] = notify
         #context['checked'] = check
