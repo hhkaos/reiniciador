@@ -11,7 +11,7 @@
   {% block body %}
   <h1>Miembros de la comunidad de Iniciador</h1>
 
-  {% if user.member.status = "active" %}
+  {% if user.member.status = "active" or user.member.status = "unknown" %}
     <table id="community" class="table table-striped table-hover">
       <thead>
       <tr>
@@ -33,6 +33,8 @@
             </ul>
           </div>
         </th>
+        <th>Estado</th>
+        <th>Última actividad</th>
         <th>Email personal</th>
         <th>Teléfono(s)</th>
         <th>Emails secundarios</th>
@@ -40,7 +42,7 @@
       </thead>
       <tbody>
       {% for m in members %}
-        {% if m.status = "active" %}
+        {% if m.status = "active" or m.status = "unknown" %}
         <tr class="{% for g in m.groups.all %}{{g|slugify}}{% endfor %}">
           <td><div class="img" style="background-image:url(/media/{{m.photo}})"></div></td>
           <td>{{m.user.first_name}}</td>
@@ -50,6 +52,14 @@
             {{g}}
             {% endfor %}
           </td>
+          <td>
+            {% if m.status = "active" %}
+              Activo
+            {% else %}
+              Desconocido
+            {% endif %}
+          </td>
+          <td>{{m.last_activity}}</td>
           <td>{{m.user.email}}</td>
           <td>
             {{m.phone}}
