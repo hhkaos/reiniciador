@@ -314,6 +314,21 @@ a.profile-link{
           COMMUNITY PAGE
 
 ********************************/
+.modal-body .thumb{
+  display: inline-block;
+  width: 30%;
+}
+.modal-body .thumb img{
+  width: 100%;
+}
+.modal-body ul{
+  display: inline-block;
+  vertical-align: top;
+  width: 69%;
+}
+.modal-body li{
+  margin-bottom: 1em;
+}
 #community .img{
   background-image: url(/media/photos/JoseM.png);
   width: 50px;

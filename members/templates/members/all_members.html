@@ -34,46 +34,91 @@
           </div>
         </th>
         <th>Estado</th>
-        <th>Última actividad</th>
+        <th class="hidden">Última actividad</th>
         <th>Email personal</th>
         <th>Teléfono(s)</th>
-        <th>Emails secundarios</th>
+        <th class="hidden">Emails secundarios</th>
+        <th class="hidden">Bio</th>
+        <th class="hidden">Role</th>
+        <th class="hidden">Profiles</th>
       </tr>
       </thead>
       <tbody>
       {% for m in members %}
         {% if m.status = "active" or m.status = "unknown" %}
-        <tr class="{% for g in m.groups.all %}{{g|slugify}}{% endfor %} all">
-          <td><div class="img" style="background-image:url(/media/{{m.photo}})"></div></td>
-          <td>{{m.user.first_name}}</td>
-          <td>{{m.user.last_name}}</td>
-          <td>
+        <tr class="{% for g in m.groups.all %}{{g|slugify}}{% endfor %} all" data-id="{{m.id}}">
+          <td><div class="img" style="background-image:url(/media/{{m.photo}})" data-src="/media/{{m.photo}}"></div></td>
+          <td class="first_name">{{m.user.first_name}}</td>
+          <td class="last_name">{{m.user.last_name}}</td>
+          <td class="groups">
             {% for g in m.groups.all %}
             {{g}}
             {% endfor %}
           </td>
-          <td>
+          <td class="status">
             {% if m.status = "active" %}
               Activo
             {% else %}
               Desconocido
             {% endif %}
           </td>
-          <td>{{m.last_activity}}</td>
-          <td>{{m.user.email}}</td>
-          <td>
+          <td class="last_activity hidden">{{m.last_activity}}</td>
+          <td class="email">{{m.user.email}}</td>
+          <td class="phone">
             {{m.phone}}
           </td>
-          <td>
+          <td class="secondary_emails hidden">
             {% for s in m.secondary_emails.all %}
               {{s}}
             {% endfor %}
+          </td>
+          <td class="hidden bio">{{m.bio}}</td>
+          <td class="hidden role">{{m.role}}</td>
+          <!--<div>{{m.profiles.all}}</div>-->
+          <td class="profiles hidden" >
+          {% for p in m.profiles.all %}
+            <a href="{{p.url}}">{% if p.name %}{{p.name|title }}{% else %}{{p.network|title }}{% endif %}
+            </a>
+          {% endfor %}
           </td>
         </tr>
         {% endif %}
       {% endfor %}
       </tbody>
     </table>
+
+  <div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Modal title</h4>
+        </div>
+        <div class="modal-body">
+          <div class="thumb">
+            <img class="photo">
+          </div>
+          <ul>
+            <li><strong>Bio:</strong> <span class="bio"></span></li>
+            <li><strong>Rol:</strong> <span class="role"></span></li>
+            <li><strong>Perfiles:</strong> <span class="profiles"></span></li>
+            <li><strong>Otros emails:</strong> <span class="secondary_emails"></span></li>
+            <li><strong>Estado:</strong> <span class="status"></span></li>
+            <li><strong>Última vez que confirmó su relación/datos en reiniciador:</strong> <span class="last_activity"></span></li>
+            <li><strong>Grupos:</strong> <span class="groups"></span></li>
+            <li><strong>Email personal:</strong> <span class="email"></span></li>
+            <li><strong>Teléfono:</strong> <span class="phone"></span></li>
+            
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+
   {% else %}
     <p>Lo sentimos, al no ser un miembro activo no puedes consultar los datos de contacto de los miembros de la comunidad</p>
   {% endif %}
