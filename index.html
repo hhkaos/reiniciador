@@ -1,0 +1,171 @@
+<html>
+<head>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="jsrender.min.js"></script>
+
+
+<title>Voluntarios en Iniciador Madrid</title>
+<style type="text/css">
+body{
+	font-family: 'Open Sans', sans-serif;
+}
+.photo{
+	width: 130px;
+}
+.center{
+	margin: 0 auto;
+}
+.voluntarios li{
+	margin-bottom: 1em
+}
+strong{
+	text-decoration: underline;
+}
+.ml1{
+	margin-left: 1em;
+}
+.mr1{
+	margin-right: 1em;
+}
+.motivation{
+	    max-width: 750px;
+    margin: 1em auto 2em;
+    font-size: 1.2em;
+}
+.ml10{
+	margin-left: 10px;
+}
+.mr1, .ml1{
+	display: inline-block;
+	width: 180px;
+	margin-bottom: 2em;
+}
+</style>
+</head>
+<body>
+
+<div class="container text-center">
+	<div class="row">
+		<h1>Voluntarios en Iniciador Madrid</h1>
+
+		<p class="motivation">
+			Todas las actividades organizadas la llevan a cabo un grupo de emprendedores voluntarios
+			que comparten <a href="http://www.iniciador.com/es/que-es-iniciador/estructura">los valores de la Fundación Iniciador</a> y quieren aportar <strong>ayudar a todas aquellas personas que están trabajando por innovar y por
+			transformar en un lugar mejor</strong>.
+		</p>
+
+		<p>
+			<a href="#" class="btn btn-primary mr1">¿Cómo nos organizamos? <i class="fa fa-file-text-o ml10"></i></a> 
+			<a href="https://docs.google.com/forms/d/1IBB95J3JIjOpVnJBK8b1QiNf7HqfwzkYNSS2zXOusus/viewform" class="btn btn-warning ml1">¿Quieres unirte? <i class="fa fa-pencil-square-o ml10"></i></a></p>
+	</div>
+
+	<ul id="activos" class="voluntarios row list-unstyled">
+
+	</ul>
+
+	<h2>Otros voluntarios que han pasado por Iniciador Madrid</h2>
+	<ul id="inactivos" class="voluntarios list-unstyled">
+	</ul>
+</div>
+
+<script id="theTmpl" type="text/x-jsrender">
+<li class="col-md-2 col-sm-4 col-xs-6 text-center" data-date="{{:datetime}}">
+
+	<a href="{{:perfildelinkedinurl}}">
+		<img src="{{if foto}}{{:foto}}{{else}}anonymous-user.png{{/if}}" class="thumbnail photo center"/>
+		{{:nombreyapellidos}}
+	</a><br>	
+	
+	<a href="{{:urldetuproyectopersonal}}"><i class="fa fa-globe"></i>
+  <a href="{{:perfildelinkedinurl}}" class="expand"><i class="fa fa-linkedin"></i></a>
+  <a href="{{:twitter}}"><i class="fa fa-twitter"></i></a><br>
+  <small>Desde: {{:timestamp}}<br></small>
+
+   
+</li>
+</script>
+
+<script>
+$(document).ready(function(){
+
+
+Date.prototype.yyyymmdd = function() {
+   var yyyy = this.getFullYear().toString();
+   var mm = (this.getMonth()+1).toString(); // getMonth() is zero-based
+   var dd  = this.getDate().toString();
+   return yyyy + "-" + (mm[1]?mm:"0"+mm[0]) + "-" + (dd[1]?dd:"0"+dd[0]); // padding
+  };
+
+
+
+$.ajax({
+    url: "https://spreadsheets.google.com/feeds/list/1mDYpVwSoJZJ8mHfOph7tXoM8z9hOkb2Yd3E4DOKCg34/3/public/values?alt=json-in-script",
+ 
+    // The name of the callback parameter, as specified by the YQL service
+    jsonp: "callback",
+ 
+    // Tell jQuery we're expecting JSONP
+    dataType: "jsonp",
+ 
+    // Work with the response
+    success: function( response ) {
+				
+				var data, htmlOutput, datetime;
+				var template = $.templates("#theTmpl");
+
+        response.feed.entry.forEach(function(elem, i){
+        	
+        		data = {};
+        		data.twitter = elem["gsx$cuentapersonaldetwitter"].$t;
+        		data.estado = elem["gsx$estado"].$t;
+        		data.foto = elem["gsx$foto"].$t;
+        		data.nombreyapellidos = elem["gsx$nombreyapellidos"].$t;
+        		data.perfildelinkedinurl = elem["gsx$perfildelinkedinurl"].$t;
+        		
+        		datetime = new Date(elem["gsx$timestamp"].$t)
+        		data.datetime = datetime.getTime();
+        		data.timestamp = datetime.getDate() + "/" + (datetime.getMonth()+1) + "/" + datetime.getFullYear();
+
+        		data.urldetuproyectopersonal = elem["gsx$urldetuproyectopersonal"].$t;
+
+
+						htmlOutput = template.render(data);
+						if( data.estado == "Activo"){
+							$("#activos").append(htmlOutput);
+						}else if( data.estado == "Inactivo"){
+							$("#inactivos").append(htmlOutput);
+						}
+        	
+        });
+
+        ["#activos","#inactivos"].forEach(function(elem){
+	        $(elem + " li").sort(function(a,b){
+	        	a = $(a).data("date");
+	        	b = $(b).data("date");
+					  return a>b ? -1 : a<b ? 1 : 0
+					}).each(function(){
+					    $(elem).prepend(this);
+					});
+				});
+
+				
+    }
+});
+
+
+});
+
+</script>
+
+</body>
+</html>

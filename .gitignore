@@ -1,0 +1,8 @@
+*.pyc
+staticfiles
+local_settings.py
+/media/
+/static/
+/members/static/admin/
+/members/static/rest_framework/
+/members/static/debug_toolbar/
