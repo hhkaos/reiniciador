@@ -53,6 +53,9 @@ strong{
 	width: 180px;
 	margin-bottom: 2em;
 }
+#organizadores li{
+	min-height: 210px;
+}
 </style>
 </head>
 <body>
@@ -72,101 +75,157 @@ strong{
 			<a href="https://docs.google.com/forms/d/1IBB95J3JIjOpVnJBK8b1QiNf7HqfwzkYNSS2zXOusus/viewform" class="btn btn-warning ml1">¿Quieres unirte? <i class="fa fa-pencil-square-o ml10"></i></a></p>
 	</div>
 
-	<ul id="activos" class="voluntarios row list-unstyled">
+	<h2>Organizadores</h2>
+	<ul id="organizadores" class="voluntarios row list-unstyled clearfix">
 
 	</ul>
 
+	<h2>Colaboradores activos</h2>
+	<ul id="activos" class="voluntarios list-unstyled clearfix">
+	</ul>
+	
+	<h2>Colaboradores en proceso de onbording</h2>
+	<ul id="onboarding" class="voluntarios list-unstyled clearfix">
+	</ul>
+
 	<h2>Otros voluntarios que han pasado por Iniciador Madrid</h2>
-	<ul id="inactivos" class="voluntarios list-unstyled">
+	<ul id="inactivos" class="voluntarios list-unstyled clearfix">
 	</ul>
 </div>
 
 <script id="theTmpl" type="text/x-jsrender">
-<li class="col-md-2 col-sm-4 col-xs-6 text-center" data-date="{{:datetime}}">
-
-	<a href="{{:perfildelinkedinurl}}">
-		<img src="{{if foto}}{{:foto}}{{else}}anonymous-user.png{{/if}}" class="thumbnail photo center"/>
-		{{:nombreyapellidos}}
-	</a><br>	
-	
-	<a href="{{:urldetuproyectopersonal}}"><i class="fa fa-globe"></i>
-  <a href="{{:perfildelinkedinurl}}" class="expand"><i class="fa fa-linkedin"></i></a>
-  <a href="{{:twitter}}"><i class="fa fa-twitter"></i></a><br>
-  <small>Desde: {{:timestamp}}<br></small>
-
+<li class="col-md-2 col-sm-4 col-xs-6 text-center clearfix" data-date="{{if datetime}}{{:datetime}}{{else}}999999999999999{{/if}}">
+	{{if nombreyapellidos}}
+		<a href="{{:perfildelinkedinurl}}">
+			<img src="{{if foto}}{{:foto}}{{else}}anonymous-user.png{{/if}}" class="thumbnail photo center"/>
+		</a>	
+		{{if rol != 'Colaborador'}}	
+			{{:rol}}<br>
+		{{/if}}
+		<a href="{{:perfildelinkedinurl}}">{{:nombreyapellidos}}</a>
+		<br>
+		
+		
+		<a href="{{:urldetuproyectopersonal}}"><i class="fa fa-globe"></i>
+	  <a href="{{:perfildelinkedinurl}}" class="expand"><i class="fa fa-linkedin"></i></a>
+	  <a href="{{:twitter}}"><i class="fa fa-twitter"></i></a><br>
+	  <small>Desde: {{:timestamp}}<br></small>
+	{{else}}
+		<img src="anonymous-user.png" class="thumbnail photo center"/>
+		{{:rol}}<br>
+		Sin asignar
+		
+	{{/if}}
    
 </li>
 </script>
 
 <script>
-$(document).ready(function(){
+	$(document).ready(function(){
 
 
-Date.prototype.yyyymmdd = function() {
-   var yyyy = this.getFullYear().toString();
-   var mm = (this.getMonth()+1).toString(); // getMonth() is zero-based
-   var dd  = this.getDate().toString();
-   return yyyy + "-" + (mm[1]?mm:"0"+mm[0]) + "-" + (dd[1]?dd:"0"+dd[0]); // padding
-  };
+		Date.prototype.yyyymmdd = function() {
+		   var yyyy = this.getFullYear().toString();
+		   var mm = (this.getMonth()+1).toString(); // getMonth() is zero-based
+		   var dd  = this.getDate().toString();
+		   return yyyy + "-" + (mm[1]?mm:"0"+mm[0]) + "-" + (dd[1]?dd:"0"+dd[0]); // padding
+		  };
+
+		$.ajax({
+		    url: "https://spreadsheets.google.com/feeds/list/1mDYpVwSoJZJ8mHfOph7tXoM8z9hOkb2Yd3E4DOKCg34/4/public/values?alt=json-in-script",
+		 
+		    // The name of the callback parameter, as specified by the YQL service
+		    jsonp: "callback",
+		 
+		    // Tell jQuery we're expecting JSONP
+		    dataType: "jsonp",
+		 
+		    // Work with the response
+		    success: function( response ) {
+		    	console.log(response);
+		    	var roles = [];
+		    	response.feed.entry.forEach(function(elem, i){
+		    		roles.push(elem["gsx$roles"].$t);
+		    	});
+
+		    	$.ajax({
+				    url: "https://spreadsheets.google.com/feeds/list/1mDYpVwSoJZJ8mHfOph7tXoM8z9hOkb2Yd3E4DOKCg34/3/public/values?alt=json-in-script",
+				 
+				    // The name of the callback parameter, as specified by the YQL service
+				    jsonp: "callback",
+				 
+				    // Tell jQuery we're expecting JSONP
+				    dataType: "jsonp",
+				 
+				    // Work with the response
+				    success: function( response ) {
+								
+								var data, htmlOutput, datetime, index;
+								var template = $.templates("#theTmpl");
+
+				        response.feed.entry.forEach(function(elem, i){
+				        	
+				        		data = {};
+				        		data.twitter = elem["gsx$cuentapersonaldetwitter"].$t;
+				        		data.estado = elem["gsx$estado"].$t;
+				        		data.foto = elem["gsx$foto"].$t;
+				        		data.rol = elem["gsx$rol"].$t;
+				        		data.nombreyapellidos = elem["gsx$nombreyapellidos"].$t;
+				        		data.perfildelinkedinurl = elem["gsx$perfildelinkedinurl"].$t;
+				        		
+				        		datetime = new Date(elem["gsx$timestamp"].$t)
+				        		data.datetime = datetime.getTime();
+				        		data.timestamp = datetime.getDate() + "/" + (datetime.getMonth()+1) + "/" + datetime.getFullYear();
+
+				        		data.urldetuproyectopersonal = elem["gsx$urldetuproyectopersonal"].$t;
 
 
+										htmlOutput = template.render(data);
+										if( data.estado == "Inactivo"){
+											$("#inactivos").append(htmlOutput);
+										}else if( data.rol == "Colaborador" && data.estado == "Activo"){
+											$("#activos").append(htmlOutput);
+										}else if( data.rol == "Colaborador" && data.estado == "Pendiente"){
+											$("#onboarding").append(htmlOutput);
+										}else{
+											index = roles.indexOf(data.rol);
+											if (index > -1) {
+											    roles.splice(index, 1);
+											}
+											$("#organizadores").append(htmlOutput);
+										}
+				        });
 
-$.ajax({
-    url: "https://spreadsheets.google.com/feeds/list/1mDYpVwSoJZJ8mHfOph7tXoM8z9hOkb2Yd3E4DOKCg34/3/public/values?alt=json-in-script",
- 
-    // The name of the callback parameter, as specified by the YQL service
-    jsonp: "callback",
- 
-    // Tell jQuery we're expecting JSONP
-    dataType: "jsonp",
- 
-    // Work with the response
-    success: function( response ) {
-				
-				var data, htmlOutput, datetime;
-				var template = $.templates("#theTmpl");
+								roles.splice(roles.indexOf("Colaborador"), 1);
+								roles.forEach(function(elem){
+									data = {
+										rol: elem
+									}
+									htmlOutput = template.render(data);
+									$("#organizadores").append(htmlOutput);
+								});
 
-        response.feed.entry.forEach(function(elem, i){
-        	
-        		data = {};
-        		data.twitter = elem["gsx$cuentapersonaldetwitter"].$t;
-        		data.estado = elem["gsx$estado"].$t;
-        		data.foto = elem["gsx$foto"].$t;
-        		data.nombreyapellidos = elem["gsx$nombreyapellidos"].$t;
-        		data.perfildelinkedinurl = elem["gsx$perfildelinkedinurl"].$t;
-        		
-        		datetime = new Date(elem["gsx$timestamp"].$t)
-        		data.datetime = datetime.getTime();
-        		data.timestamp = datetime.getDate() + "/" + (datetime.getMonth()+1) + "/" + datetime.getFullYear();
+				        ["#activos", "#inactivos", "#organizadores", "#onboarding"].forEach(function(elem){
+					        $(elem + " li").sort(function(a,b){
+					        	a = $(a).data("date");
+					        	b = $(b).data("date");
+									  return a>b ? -1 : a<b ? 1 : 0
+									}).each(function(){
+									    $(elem).prepend(this);
+									});
+								});
 
-        		data.urldetuproyectopersonal = elem["gsx$urldetuproyectopersonal"].$t;
-
-
-						htmlOutput = template.render(data);
-						if( data.estado == "Activo"){
-							$("#activos").append(htmlOutput);
-						}else if( data.estado == "Inactivo"){
-							$("#inactivos").append(htmlOutput);
-						}
-        	
-        });
-
-        ["#activos","#inactivos"].forEach(function(elem){
-	        $(elem + " li").sort(function(a,b){
-	        	a = $(a).data("date");
-	        	b = $(b).data("date");
-					  return a>b ? -1 : a<b ? 1 : 0
-					}).each(function(){
-					    $(elem).prepend(this);
-					});
+								
+				    }
 				});
-
-				
-    }
-});
+		    }
+		});
 
 
-});
+		
+
+
+	});
 
 </script>
 
