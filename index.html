@@ -105,11 +105,13 @@ strong{
 		<a href="{{:perfildelinkedinurl}}">{{:nombreyapellidos}}</a>
 		<br>
 		
-		
-		<a href="{{:urldetuproyectopersonal}}"><i class="fa fa-globe"></i>
-	  <a href="{{:perfildelinkedinurl}}" class="expand"><i class="fa fa-linkedin"></i></a>
-	  <a href="{{:twitter}}"><i class="fa fa-twitter"></i></a><br>
-	  <small>Desde: {{:timestamp}}<br></small>
+		{{if estado == 'Activo'}}	
+			<a href="{{:urldetuproyectopersonal}}"><i class="fa fa-globe"></i>
+		  <a href="{{:perfildelinkedinurl}}" class="expand"><i class="fa fa-linkedin"></i></a>
+		  <a href="{{:twitter}}"><i class="fa fa-twitter"></i></a><br>
+
+	  	<small>Desde: {{:timestamp}}<br></small>
+	  {{/if}}
 	{{else}}
 		<img src="anonymous-user.png" class="thumbnail photo center"/>
 		{{:rol}}<br>
