@@ -12,7 +12,7 @@ PyYAML==3.10
 Pygments==1.6
 Twisted-Core==13.2.0
 Twisted-Web==13.2.0
-Werkzeug==0.9.4
+Werkzeug==0.15.3
 ZSI==2.1-a1
 adium-theme-ubuntu==0.3.4
 apache-libcloud==0.16.0
