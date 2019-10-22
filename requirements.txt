@@ -5,7 +5,7 @@ Mako==0.9.1
 Markdown==2.5.2
 MarkupSafe==0.18
 PAM==0.4.2
-Pillow==2.3.0
+Pillow==6.2.0
 PyChart==1.39
 PyWebDAV==0.9.8
 PyYAML==3.10
