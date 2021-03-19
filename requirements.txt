@@ -34,7 +34,7 @@ django-model-utils==2.2
 django-storages==1.1.8
 django-suit==0.2.11
 django-toolbelt==0.0.1
-djangorestframework==3.0.0
+djangorestframework==3.11.2
 djrill==1.2.0
 docutils==0.12
 duplicity==0.6.23
