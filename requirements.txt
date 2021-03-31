@@ -48,7 +48,7 @@ iotop==0.6
 ipdb==0.8
 ipython==2.3.1
 lockfile==0.8
-lxml==3.3.3
+lxml==4.6.3
 mock==1.0.1
 oauthlib==0.6.1
 oneconf==0.3.7
