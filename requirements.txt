@@ -28,7 +28,7 @@ dirspec==13.10
 dj-database-url==0.3.0
 dj-static==0.0.6
 django-braces==1.4.0
-django-debug-toolbar==1.2.2
+django-debug-toolbar==1.11.1
 django-filter==0.9.1
 django-model-utils==2.2
 django-storages==1.1.8
