@@ -69,7 +69,7 @@ pysmbc==1.0.14.1
 python-apt==0.9.3.5
 python-dateutil==1.5
 python-debian==0.1.21-nmu2ubuntu2
-python-ldap==2.4.10
+python-ldap==3.4.0
 python-openid==2.2.5
 pytz==2012c
 pyxdg==0.25
