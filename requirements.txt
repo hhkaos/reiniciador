@@ -46,7 +46,7 @@ html5lib==0.999
 httplib2==0.8
 iotop==0.6
 ipdb==0.8
-ipython==2.3.1
+ipython==7.16.3
 lockfile==0.8
 lxml==3.3.3
 mock==1.0.1
