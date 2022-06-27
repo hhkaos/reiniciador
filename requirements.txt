@@ -74,7 +74,7 @@ python-openid==2.2.5
 pytz==2012c
 pyxdg==0.25
 raven==5.1.0
-reportlab==3.0
+reportlab==3.5.55
 requests==2.4.3
 roman==2.0.0
 sessioninstaller==0.0.0
